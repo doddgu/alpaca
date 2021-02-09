@@ -1,0 +1,10 @@
+{
+	"folders": [
+		{
+			"path": "app\\alpaca"
+		}
+	],
+	"settings": {
+		"typescript.tsdk": "node_modules\\typescript\\lib"
+	}
+}
