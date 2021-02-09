@@ -40,7 +40,7 @@
     command input
     <br />5. Search and run "Select TypeScript version" -> "Use workspace version"
   </p>
-  <button @click="count++">count is: {{ count }}</button>
+  <a-button type="primary" @click="count++">count is: {{ count }}</a-button>
   <p>
     Edit
     <code>components/HelloWorld.vue</code> to test hot module replacement.

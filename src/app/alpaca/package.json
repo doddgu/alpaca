@@ -1,5 +1,6 @@
 {
   "name": "alpaca",
+  "license": "MIT",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
@@ -7,6 +8,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "ant-design-vue": "^2.0.0",
     "vue": "^3.0.5"
   },
   "devDependencies": {
