@@ -1,7 +1,7 @@
 {
   "name": "alpaca",
   "license": "MIT",
-  "version": "0.0.0",
+  "version": "0.0.1-alpha",
   "scripts": {
     "dev": "vite",
     "build": "vuedx-typecheck . && vite build",
@@ -9,9 +9,17 @@
   },
   "dependencies": {
     "ant-design-vue": "^2.0.0",
-    "vue": "^3.0.5"
+    "axios": "^0.21.1",
+    "js-cookie": "^2.2.1",
+    "moment": "^2.29.1",
+    "vue": "^3.0.5",
+    "vue-i18n": "^9.0.0-rc.5",
+    "vue-router": "4.0.3",
+    "vuex": "^4.0.0"
   },
   "devDependencies": {
+    "@intlify/vite-plugin-vue-i18n": "^1.0.0-beta.16",
+    "@types/js-cookie": "^2.2.6",
     "@vitejs/plugin-vue": "^1.1.4",
     "@vue/compiler-sfc": "^3.0.5",
     "@vuedx/typecheck": "^0.6.0",

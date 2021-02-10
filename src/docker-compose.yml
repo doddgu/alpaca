@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  alpaca.service.open:
+    image: ${DOCKER_REGISTRY-}alpacaserviceopen
+    ports:
+     - "10002:10002"
+    build:
+      context: .
+      dockerfile: Service/Alpaca.Service.Open/Dockerfile
