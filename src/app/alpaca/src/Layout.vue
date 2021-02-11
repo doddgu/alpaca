@@ -14,7 +14,7 @@
                     <span class="submenu-title-wrapper">
                         <setting-outlined />
                         <UserOutlined />
-                        {{ store.state.user.name }}
+                        {{ store.state.user.nickName }}
                     </span>
                 </template>
                 <a-menu-item-group :title="$t('text.account')">
@@ -32,7 +32,7 @@
                 <template #title>
                     <span class="submenu-title-wrapper">
                         <setting-outlined />
-                        {{ lang }}
+                        {{ $t('text.currentLang') }}
                     </span>
                 </template>
                 <a-menu-item-group :title="$t('text.lang')">
@@ -135,10 +135,6 @@ ref: currentTopMenu = ['']
 ref: selectedKeys2 = ['1']
 ref: collapsed = false
 ref: openKeys = ['sub1']
-
-ref: lang = computed(() => {
-    return i18n.global.locale === 'en' ? 'English' : '中文'
-})
 
 function logout() {
     store.commit('setUser', new User())

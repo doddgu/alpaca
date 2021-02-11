@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Biz\Alpaca.Biz.Account\Alpaca.Biz.Account.csproj" />
+    <ProjectReference Include="..\..\Data\Alpaca.Data.EFCore\Alpaca.Data.EFCore.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Alpaca.Infrastructure.Security\Alpaca.Infrastructure.Security.csproj" />
     <ProjectReference Include="..\..\Model\Alpaca.Model.Account\Alpaca.Model.Account.csproj" />
   </ItemGroup>

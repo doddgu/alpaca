@@ -1,4 +1,7 @@
+using Alpaca.Data.EFCore;
+using Alpaca.Infrastructure.Config;
 using Alpaca.Infrastructure.Security;
+using Alpaca.Service.Open.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -44,7 +47,7 @@ namespace Alpaca.Service.Open
                 c.OperationFilter<AddResponseHeadersFilter>();
                 c.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
 
-                //在header中添加token，传递到后台
+                // add token to header
                 c.OperationFilter<SecurityRequirementsOperationFilter>();
                 c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
                 {
@@ -57,6 +60,7 @@ namespace Alpaca.Service.Open
 
             services.AddCors(option => option.AddPolicy("AllowCors", builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
 
+            // Auth
             services
                 .AddAuthentication("Bearer")
                 .AddJwtBearer(o =>
@@ -64,7 +68,7 @@ namespace Alpaca.Service.Open
                     o.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(TokenMaker.SECRET_KEY)),
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(AlpacaConfigWrapper.GetTokenSecretKey())),
                         ValidateIssuer = true,
                         ValidIssuer = "API",
                         ValidateAudience = true,
@@ -82,6 +86,8 @@ namespace Alpaca.Service.Open
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseGlobalExceptionMiddleware();
 
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Alpaca.Service.Open v1"));

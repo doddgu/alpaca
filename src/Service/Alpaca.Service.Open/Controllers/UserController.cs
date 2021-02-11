@@ -1,5 +1,6 @@
 ﻿using Alpaca.Biz.Account;
 using Alpaca.Model.Account;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -19,6 +20,13 @@ namespace Alpaca.Service.Open.Controllers
         public UserViewModel Get(string userName, string password)
         {
             return new UserBiz().GetByPassword(userName, password);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public UserViewModel Post(AddUserViewModel model)
+        {
+            return new UserBiz().Add(model, User.GetUserID());
         }
     }
 }

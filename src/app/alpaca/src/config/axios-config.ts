@@ -31,7 +31,7 @@ class AxiosConfig {
             if (error.response !== undefined && error.response.status === 401) {
                 router.push({ name: 'Auth.Login' })
             } else {
-                Catcher.showSnackbarByResponse('error', error.response || error)
+                Catcher.showMessageByResponse(error.response)
             }
             return Promise.reject(error)
         })

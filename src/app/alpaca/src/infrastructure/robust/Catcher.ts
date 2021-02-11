@@ -1,4 +1,6 @@
 import store from '../../store/Index'
+import { message } from 'ant-design-vue'
+import i18n from '../../config/i18n-config'
 
 export default class Catcher {
     static alert (e: any) {
@@ -29,5 +31,10 @@ export default class Catcher {
         store.state.snackbar.isShow = true
         store.state.snackbar.color = color
         store.state.snackbar.text = text
+    }
+
+    static showMessageByResponse (resp: any) {
+        const msg = resp.data[i18n.global.locale.toUpperCase() + "Message"]
+        message.error(msg)
     }
 }

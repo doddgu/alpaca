@@ -6,14 +6,12 @@ using System.Threading.Tasks;
 
 namespace Alpaca.Model.Account
 {
-    public class UserViewModel
+    public class AddUserViewModel
     {
-        public int ID { get; set; }
-
         public string Name { get; set; }
 
         public string NickName { get; set; }
 
-        public string AccessToken { get; set; }
+        public string Password { get; set; }
     }
 }
