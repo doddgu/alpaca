@@ -14,7 +14,7 @@
                     <span class="submenu-title-wrapper">
                         <setting-outlined />
                         <UserOutlined />
-                        {{ store.state.user.nickName }}
+                        Name: {{ store.state.user.nickName }}
                     </span>
                 </template>
                 <a-menu-item-group :title="$t('text.account')">
