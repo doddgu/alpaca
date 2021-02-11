@@ -32,65 +32,63 @@ namespace Alpaca.Data.EFCore
             return new ADbContext(connectionString ?? AlpacaConfigWrapper.GetConnectionString());
         }
 
-        //#region CRUD
+        #region CRUD
 
-        //public TEntity Add<TEntity, TKey>(TEntity entity, int updateUserID)
-        //    where TEntity : EntityBase<TKey>
-        //{
-        //    //entity.UpdateTime = DateTime.Now;
-        //    entity.CreateUserID = entity.UpdateUserID = updateUserID;
+        public TEntity Add<TEntity, TKey>(TEntity entity, int updateUserID)
+            where TEntity : EntityBase<TKey>
+        {
+            entity.UpdateTime = DateTime.Now;
+            entity.CreateUserID = entity.UpdateUserID = updateUserID;
 
-        //    Set<TEntity>().Add(entity);
+            Set<TEntity>().Add(entity);
 
-        //    SaveChanges();
+            SaveChanges();
 
-        //    return entity;
-        //}
+            return entity;
+        }
 
-        //public List<TEntity> AddRange<TEntity, TKey>(List<TEntity> entities, int updateUserID)
-        //    where TEntity : EntityBase<TKey>
-        //{
-        //    entities.ForEach(entity =>
-        //    {
-        //        //entity.UpdateTime = DateTime.Now;
-        //        entity.CreateUserID = entity.UpdateUserID = updateUserID;
+        public List<TEntity> AddRange<TEntity, TKey>(List<TEntity> entities, int updateUserID)
+            where TEntity : EntityBase<TKey>
+        {
+            entities.ForEach(entity =>
+            {
+                entity.UpdateTime = DateTime.Now;
+                entity.CreateUserID = entity.UpdateUserID = updateUserID;
 
-        //        Set<TEntity>().Add(entity);
-        //    });
+                Set<TEntity>().Add(entity);
+            });
 
-        //    SaveChanges();
+            SaveChanges();
 
-        //    return entities;
-        //}
+            return entities;
+        }
 
-        //public TEntity Update<TEntity, TKey>(TEntity entity, int updateUserID)
-        //    where TEntity : EntityBase<TKey>
-        //{
-        //    //entity.UpdateTime = DateTime.Now;
-        //    entity.UpdateUserID = updateUserID;
+        public TEntity Update<TEntity, TKey>(TEntity entity, int updateUserID)
+            where TEntity : EntityBase<TKey>
+        {
+            entity.UpdateTime = DateTime.Now;
+            entity.UpdateUserID = updateUserID;
 
-        //    Set<TEntity>().Attach(entity);
-        //    Entry(entity).State = EntityState.Modified;
+            Set<TEntity>().Update(entity);
 
-        //    SaveChanges();
+            SaveChanges();
 
-        //    return entity;
-        //}
+            return entity;
+        }
 
-        //public void Delete<TEntity, TKey>(TEntity entity, int updateUserID)
-        //    where TEntity : EntityBase<TKey>
-        //{
-        //    entity.IsDeleted = true;
-        //    //entity.UpdateTime = DateTime.Now;
-        //    entity.UpdateUserID = updateUserID;
+        public void Delete<TEntity, TKey>(TEntity entity, int updateUserID)
+            where TEntity : EntityBase<TKey>
+        {
+            entity.IsDeleted = true;
+            entity.UpdateTime = DateTime.Now;
+            entity.UpdateUserID = updateUserID;
 
-        //    Set<TEntity>().Attach(entity);
-        //    Entry(entity).State = EntityState.Modified;
+            Set<TEntity>().Update(entity);
 
-        //    SaveChanges();
-        //}
+            SaveChanges();
+        }
 
-        //#endregion
+        #endregion
 
         #region Deploy
 

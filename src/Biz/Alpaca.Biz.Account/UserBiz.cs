@@ -33,19 +33,33 @@ namespace Alpaca.Biz.Account
 
         public UserViewModel Add(AddUserViewModel model, int userID)
         {
-            var entity = new MapperWrapper<AddUserViewModel, User>().GetEntity(model);
-
-            entity.CreateUserID = entity.UpdateUserID = userID;
-            entity.Password = PasswordWrapper.Encrypt(model.Password);
-
             using (var dbContext = ADbContext.Create())
             {
-                dbContext.Add(entity);
+                if (dbContext.User.Any(u => u.Name == model.Name && !u.IsDeleted))
+                {
+                    throw new AException(ErrorCode.UserNameExist);
+                }
+
+                var entity = new MapperWrapper<AddUserViewModel, User>().GetEntity(model);
+
+                entity.Password = PasswordWrapper.Encrypt(model.Password);
+
+                dbContext.Add<User, int>(entity, userID);
+
+                return new MapperWrapper<UserViewModel, User>().GetModel(entity);
+            }
+        }
+
+        public void Delete(int userID)
+        {
+            using (var dbContext = ADbContext.Create())
+            {
+                var entity = dbContext.User.SingleOrDefault(u => u.ID == userID && !u.IsDeleted);
+
+                dbContext.Delete<User, int>(entity, userID);
 
                 dbContext.SaveChanges();
             }
-
-            return new MapperWrapper<UserViewModel, User>().GetModel(entity);
         }
     }
 }

@@ -28,5 +28,14 @@ namespace Alpaca.Service.Open.Controllers
         {
             return new UserBiz().Add(model, User.GetUserID());
         }
+
+        [Authorize]
+        [HttpPost]
+        public string Delete()
+        {
+            new UserBiz().Delete(User.GetUserID());
+
+            return "success";
+        }
     }
 }

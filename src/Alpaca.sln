@@ -25,19 +25,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alpaca.Infrastructure.Secur
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alpaca.Biz.Account", "Biz\Alpaca.Biz.Account\Alpaca.Biz.Account.csproj", "{2277F33C-D5E0-4D60-9F0B-D85E3D0DF354}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alpaca.Data.Entities", "Data\Alpaca.Data.Entities\Alpaca.Data.Entities.csproj", "{0F153EB6-FDED-4B21-9E36-FEFE3FB1D7C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alpaca.Data.Entities", "Data\Alpaca.Data.Entities\Alpaca.Data.Entities.csproj", "{0F153EB6-FDED-4B21-9E36-FEFE3FB1D7C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alpaca.Data.EFCore", "Data\Alpaca.Data.EFCore\Alpaca.Data.EFCore.csproj", "{79F091BB-713C-455B-860A-E46B26E3A346}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alpaca.Data.EFCore", "Data\Alpaca.Data.EFCore\Alpaca.Data.EFCore.csproj", "{79F091BB-713C-455B-860A-E46B26E3A346}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alpaca.Infrastructure.Config", "Infrastructure\Alpaca.Infrastructure.Config\Alpaca.Infrastructure.Config.csproj", "{DECCABD7-4DB5-4654-8436-30136AECC3CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alpaca.Infrastructure.Config", "Infrastructure\Alpaca.Infrastructure.Config\Alpaca.Infrastructure.Config.csproj", "{DECCABD7-4DB5-4654-8436-30136AECC3CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alpaca.Infrastructure.Mapping", "Infrastructure\Alpaca.Infrastructure.Mapping\Alpaca.Infrastructure.Mapping.csproj", "{21CD24D5-07C0-48AF-B6BA-84DEDB10845D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alpaca.Infrastructure.Mapping", "Infrastructure\Alpaca.Infrastructure.Mapping\Alpaca.Infrastructure.Mapping.csproj", "{21CD24D5-07C0-48AF-B6BA-84DEDB10845D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alpaca.Infrastructure.Caching", "Infrastructure\Alpaca.Infrastructure.Caching\Alpaca.Infrastructure.Caching.csproj", "{C07D9FE7-E17F-48CE-AA77-F9F01C74E2D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alpaca.Infrastructure.Caching", "Infrastructure\Alpaca.Infrastructure.Caching\Alpaca.Infrastructure.Caching.csproj", "{C07D9FE7-E17F-48CE-AA77-F9F01C74E2D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alpaca.Infrastructure.Robust", "Infrastructure\Alpaca.Infrastructure.Robust\Alpaca.Infrastructure.Robust.csproj", "{9C020AB5-B612-414C-9BFC-2D820C0F4B2D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alpaca.Infrastructure.Robust", "Infrastructure\Alpaca.Infrastructure.Robust\Alpaca.Infrastructure.Robust.csproj", "{9C020AB5-B612-414C-9BFC-2D820C0F4B2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alpaca.Infrastructure.Enums", "Infrastructure\Alpaca.Infrastructure.Enums\Alpaca.Infrastructure.Enums.csproj", "{71674EED-6F66-45E0-A367-28780C97E0C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alpaca.Infrastructure.Enums", "Infrastructure\Alpaca.Infrastructure.Enums\Alpaca.Infrastructure.Enums.csproj", "{71674EED-6F66-45E0-A367-28780C97E0C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alpaca.Test.Account", "Test\Alpaca.Test.Account\Alpaca.Test.Account.csproj", "{4FBDFC7F-3103-410C-A4D4-C1EA1D187D51}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,6 +95,10 @@ Global
 		{71674EED-6F66-45E0-A367-28780C97E0C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71674EED-6F66-45E0-A367-28780C97E0C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71674EED-6F66-45E0-A367-28780C97E0C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FBDFC7F-3103-410C-A4D4-C1EA1D187D51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FBDFC7F-3103-410C-A4D4-C1EA1D187D51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FBDFC7F-3103-410C-A4D4-C1EA1D187D51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FBDFC7F-3103-410C-A4D4-C1EA1D187D51}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -109,6 +115,7 @@ Global
 		{C07D9FE7-E17F-48CE-AA77-F9F01C74E2D0} = {5DD2C8A9-9064-4ED3-BC48-088486F27B7C}
 		{9C020AB5-B612-414C-9BFC-2D820C0F4B2D} = {5DD2C8A9-9064-4ED3-BC48-088486F27B7C}
 		{71674EED-6F66-45E0-A367-28780C97E0C4} = {5DD2C8A9-9064-4ED3-BC48-088486F27B7C}
+		{4FBDFC7F-3103-410C-A4D4-C1EA1D187D51} = {441D396B-A851-41AE-A5DE-B96730A0E5C2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {97FFE945-A397-48E0-A25F-D0A77E8E55EF}

@@ -18,5 +18,10 @@ namespace Alpaca.Infrastructure.Enums
             ZH = "密码错误",
             EN = "The password is incorrect")]
         PasswordIncorrect = 10002,
+
+        [EnumDescription(
+            ZH = "用户名已存在",
+            EN = "The user name already exists")]
+        UserNameExist = 10003,
     }
 }

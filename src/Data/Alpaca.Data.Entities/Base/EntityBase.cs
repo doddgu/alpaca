@@ -18,12 +18,11 @@ namespace Alpaca.Data.Entities
 
         public int CreateUserID { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreateTime { get; set; }
 
         public int UpdateUserID { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime UpdateTime { get; set; }
     }
 }
