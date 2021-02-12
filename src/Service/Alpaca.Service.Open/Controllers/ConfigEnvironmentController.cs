@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Alpaca.Service.Open.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [EnableCors("AllowCors")]
     [Route("api/[controller]")]
     [ApiController]
