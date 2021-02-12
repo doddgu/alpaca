@@ -146,7 +146,7 @@ function route(name: string) {
 }
 
 function setSelectedMenu(link: any) {
-    if (!(link && link.length > 0)) return
+    if (!link || link.length === 0) return
 
     let key = ''
 
