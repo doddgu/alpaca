@@ -83,11 +83,12 @@ export default defineComponent({
 
 <script setup lang="ts">
 import { UserOutlined } from '@ant-design/icons-vue'
+import RootState from '../../store/RootState'
 import { useStore } from 'vuex'
 ref: userName = ''
 ref: password = ''
 ref: loading = false
-const store = useStore()
+const store = useStore<RootState>()
 
 function login() {
     if (loading) return

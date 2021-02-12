@@ -4,6 +4,7 @@ export default {
         currentLang: 'English',
         lang: 'Language',
         logout: 'Logout',
-        account: 'Account'
+        account: 'Account',
+        environment: 'Environment',
     }
 }

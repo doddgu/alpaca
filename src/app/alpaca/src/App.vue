@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, watch } from 'vue'
+import { defineComponent } from 'vue'
 import Layout from './Layout.vue'
 
 export default defineComponent({

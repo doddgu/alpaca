@@ -18,13 +18,12 @@ const routes = [
                 requireAuth: true
             },
             children: [
-                // A
+                // Environment
                 {
-                    path: 'A/B',
-                    name: 'A.B',
-                    component: () => import('../components/HelloWorld.vue'),
+                    path: 'Environment/Manage',
+                    name: 'Environment.Manage',
+                    component: () => import('../views/environment/Manage.vue'),
                     meta: {
-                        menu: 'A.B',
                         requireAuth: true
                     }
                 }
