@@ -1,19 +1,15 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="10.1.1" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\Data\Alpaca.Data.EFCore\Alpaca.Data.EFCore.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Alpaca.Infrastructure.Mapping\Alpaca.Infrastructure.Mapping.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Alpaca.Infrastructure.Robust\Alpaca.Infrastructure.Robust.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\Alpaca.Infrastructure.Security\Alpaca.Infrastructure.Security.csproj" />
-    <ProjectReference Include="..\..\Model\Alpaca.Model.Account\Alpaca.Model.Account.csproj" />
+    <ProjectReference Include="..\..\Interfaces\Alpaca.Interfaces.Account\Alpaca.Interfaces.Account.csproj" />
+    <ProjectReference Include="..\..\Model\Alpaca.Model.Config\Alpaca.Model.Config.csproj" />
   </ItemGroup>
 
 </Project>

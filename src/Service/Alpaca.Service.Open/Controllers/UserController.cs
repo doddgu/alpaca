@@ -30,7 +30,7 @@ namespace Alpaca.Service.Open.Controllers
         }
 
         [Authorize]
-        [HttpPost]
+        [HttpDelete]
         public string Delete()
         {
             new UserBiz().Delete(User.GetUserID());

@@ -1,6 +1,8 @@
 using Alpaca.Data.EFCore;
 using Alpaca.Infrastructure.Config;
 using Alpaca.Infrastructure.Security;
+using Alpaca.Interfaces.Account;
+using Alpaca.Plugins.Account.OwnIntegration;
 using Alpaca.Service.Open.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -77,6 +79,8 @@ namespace Alpaca.Service.Open
                         ClockSkew = TimeSpan.Zero,
                     };
                 });
+
+            services.AddIOC();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

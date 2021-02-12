@@ -41,7 +41,7 @@ namespace Alpaca.Test.Account
             }
             catch (AException aex)
             {
-                Assert.AreEqual(aex.ErrorCode, (int)ErrorCode.UserNameExist);
+                Assert.AreEqual((int)ErrorCode.UserNameExist, aex.ErrorCode);
             }
 
             new UserBiz().Delete(user.ID);

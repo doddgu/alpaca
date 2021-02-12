@@ -13,9 +13,6 @@ namespace Alpaca.Data.EFCore
         protected ADbContext(string connectionString)
         {
             _connectionString = connectionString;
-
-            //ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-            //ChangeTracker.AutoDetectChangesEnabled = false;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
@@ -90,9 +87,25 @@ namespace Alpaca.Data.EFCore
 
         #endregion
 
-        #region Deploy
+        #region Account
 
         public DbSet<User> User { get; set; }
+
+        #endregion
+
+        #region Config
+
+        public DbSet<ConfigApp> ConfigApp { get; set; }
+
+        public DbSet<ConfigEnvironment> ConfigEnvironment { get; set; }
+
+        public DbSet<ConfigAppEnvironment> ConfigAppEnvironment { get; set; }
+
+        public DbSet<ConfigDispatch> ConfigDispatch { get; set; }
+
+        public DbSet<ConfigItem> ConfigItem { get; set; }
+
+        public DbSet<ConfigItemSniffer> ConfigItemSniffer { get; set; }
 
         #endregion
     }

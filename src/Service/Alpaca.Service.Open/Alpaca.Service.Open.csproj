@@ -19,9 +19,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Biz\Alpaca.Biz.Account\Alpaca.Biz.Account.csproj" />
+    <ProjectReference Include="..\..\Biz\Alpaca.Biz.Config\Alpaca.Biz.Config.csproj" />
     <ProjectReference Include="..\..\Data\Alpaca.Data.EFCore\Alpaca.Data.EFCore.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Alpaca.Infrastructure.Security\Alpaca.Infrastructure.Security.csproj" />
     <ProjectReference Include="..\..\Model\Alpaca.Model.Account\Alpaca.Model.Account.csproj" />
+    <ProjectReference Include="..\..\Model\Alpaca.Model.Config\Alpaca.Model.Config.csproj" />
+    <ProjectReference Include="..\..\Plugins\Account\Alpaca.Plugins.Account.OwnIntegration\Alpaca.Plugins.Account.OwnIntegration.csproj" />
   </ItemGroup>
 
   <ItemGroup>

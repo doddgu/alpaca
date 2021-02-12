@@ -23,5 +23,10 @@ namespace Alpaca.Infrastructure.Enums
             ZH = "用户名已存在",
             EN = "The user name already exists")]
         UserNameExist = 10003,
+
+        [EnumDescription(
+            ZH = "名称已存在",
+            EN = "Name already exists")]
+        NameExist = 10004,
     }
 }

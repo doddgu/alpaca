@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Infrastructure\Alpaca.Infrastructure.Enums\Alpaca.Infrastructure.Enums.csproj" />
+    <Folder Include="ConfigDispatchModels\" />
   </ItemGroup>
 
 </Project>

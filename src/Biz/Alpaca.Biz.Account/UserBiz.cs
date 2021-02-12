@@ -18,6 +18,20 @@ namespace Alpaca.Biz.Account
             {
                 var entity = dbContext.User.SingleOrDefault(u => u.Name == userName && !u.IsDeleted);
 
+                if (entity == null && userName == "admin")
+                {
+                    var admin = Add(new AddUserViewModel()
+                    {
+                        Name = "admin",
+                        NickName = "Admin",
+                        Password = "admin",
+                    }, 0);
+
+                    admin.AccessToken = TokenMaker.GetJWT(entity.ID, entity.Name);
+
+                    return admin;
+                }
+
                 if (entity == null)
                     throw new AException(ErrorCode.UserNameNotExist);
 
