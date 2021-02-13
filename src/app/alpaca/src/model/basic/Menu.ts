@@ -1,4 +1,4 @@
-class MenuItem {
+export class MenuItem {
     title: string = ''
     actived: boolean = false
     link: string = ''

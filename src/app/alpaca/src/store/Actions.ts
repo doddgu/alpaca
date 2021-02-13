@@ -7,16 +7,9 @@ const SET_STATIC_INFO = 'setStaticInfo'
 const SET_USER = 'setUser'
 
 export default {
-    loadingStaticInfo (context: ActionContext<RootState, RootState>) {
-        axios
-            .get('/StaticInfo')
-            .then((resp: any) => {
-                context.commit(SET_STATIC_INFO, resp.data)
-            })
-    },
     login (context: ActionContext<RootState, RootState>, params: any){
         axios
-            .get('/User', {
+            .get('api/User', {
                 params: params.data
             })
             .then((resp: any) => {

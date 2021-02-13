@@ -25,7 +25,7 @@ namespace Alpaca.Biz.Config
         {
             using (var dbContext = ADbContext.Create())
             {
-                var lstEntity = dbContext.ConfigEnvironment.Where(ce => !ce.IsDeleted).ToList();
+                var lstEntity = dbContext.ConfigEnvironment.Where(ce => !ce.IsDeleted).OrderByDescending(ce => ce.UpdateTime).ToList();
 
                 var lstModel = new MapperWrapper<ConfigEnvironmentViewModel, ConfigEnvironment>().GetModelList(lstEntity);
 

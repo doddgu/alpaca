@@ -2,11 +2,9 @@ import RootState from './RootState'
 import User from '../model/identity/User'
 
 import Cookies from 'js-cookie'
+import { MenuItem } from '../model/basic/Menu'
 
 export default {
-    setStaticInfo (state: RootState, staticInfo: any) {
-        state.staticInfo = staticInfo
-    },
     setUser (state: RootState, user: User) {
         state.user = user
         Cookies.set('user', JSON.stringify(user))
@@ -17,7 +15,7 @@ export default {
             state.user = JSON.parse(json)
         }
     },
-    setOverlay (state: RootState, overlay: boolean) {
-        state.overlay = overlay
+    setCurrentMenu (state: RootState, currentMenu: MenuItem) {
+        state.currentMenu = currentMenu
     }
 }

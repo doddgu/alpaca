@@ -1,6 +1,6 @@
 <template>
     <a-layout-header class="header">
-        <div class="logo">
+        <div class="logo" @click="router.push({ name: 'Index' })">
             <img src="./assets/logo.png" alt="logo" />
         </div>
         <a-menu
@@ -77,17 +77,9 @@
                 </template>
             </a-menu>
         </a-layout-sider>
-        <a-layout style="padding: 0 24px 24px">
-            <a-breadcrumb style="margin: 16px 0">
-                <a-breadcrumb-item>Home</a-breadcrumb-item>
-                <a-breadcrumb-item>List</a-breadcrumb-item>
-                <a-breadcrumb-item>App</a-breadcrumb-item>
-            </a-breadcrumb>
-            <a-layout-content
-                :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '100%' }"
-            >
-                <router-view></router-view>
-            </a-layout-content>
+        <a-layout style="padding: 24px 24px 0px 24px">
+            <Index v-if="router.currentRoute.value.name === 'Index'" />
+            <router-view v-else></router-view>
         </a-layout>
     </a-layout>
     <a-layout-footer style="text-align: center">
@@ -100,12 +92,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, watch } from 'vue'
+import Index from './views/Index.vue'
 
 export default defineComponent({
     name: 'Layout',
     components: {
-
+        Index
     }
 })
 </script>
@@ -120,6 +113,7 @@ import { UserOutlined } from '@ant-design/icons-vue'
 import moment from 'moment'
 import Cookies from 'js-cookie'
 import router from './router/Index'
+import { MenuItem } from './model/basic/Menu'
 
 const store = useStore<RootState>()
 
@@ -137,6 +131,8 @@ function setLocale(locale: string) {
     moment.locale(i18n.global.locale)
     i18n.global.locale = i18n.global.locale
     Cookies.set('locale', i18n.global.locale)
+
+    window.location.reload()
 }
 
 function route(name: string) {
@@ -145,8 +141,9 @@ function route(name: string) {
     }
 }
 
-function setSelectedMenu(link: any) {
-    if (!link || link.length === 0) return
+function getCurrentMenu(link: any): MenuItem {
+    let currentMenu = new MenuItem()
+    if (!link || link.length === 0) return currentMenu
 
     let key = ''
 
@@ -155,6 +152,7 @@ function setSelectedMenu(link: any) {
 
         if (menu.link === link) {
             key = mi.toString()
+            currentMenu = menu
             break
         } else if (menu.sub && menu.sub.length > 0) {
             for (let smi = 0; smi < menu.sub.length; smi++) {
@@ -162,6 +160,7 @@ function setSelectedMenu(link: any) {
 
                 if (subMenu.link === link) {
                     key = mi + '_' + smi
+                    currentMenu = subMenu
                     break
                 }
             }
@@ -169,11 +168,19 @@ function setSelectedMenu(link: any) {
     }
 
     selectedMenu[0] = 'menu_' + key
+
+    return currentMenu
 }
 
-const currentRouteName = computed(() => {
-    setSelectedMenu(router.currentRoute.value.name)
-    return router.currentRoute.value.name
+const currentLeftMenu = computed(() => {
+    const currentMenu = getCurrentMenu(router.currentRoute.value.name)
+    store.commit('setCurrentMenu', currentMenu)
+
+    return currentMenu
+})
+
+watch(currentLeftMenu, () => {
+    // nothing to do, effect computed
 })
 </script>
 
@@ -182,5 +189,12 @@ const currentRouteName = computed(() => {
     float: left;
     width: 160px;
     height: 60px;
+    cursor: pointer;
+}
+.layout-content {
+    background: #fff;
+    padding: 24px;
+    margin: 24px 0px 0px 0px;
+    min-height: 100%;
 }
 </style>

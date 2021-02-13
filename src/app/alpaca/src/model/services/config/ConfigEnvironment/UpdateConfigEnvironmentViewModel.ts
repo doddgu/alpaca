@@ -1,5 +1,5 @@
-import { GetConfigEnvironmentViewModel } from "./GetConfigEnvironmentViewModel";
+import GetConfigEnvironmentViewModel from "./GetConfigEnvironmentViewModel";
 
-export interface UpdateConfigEnvironmentViewModel extends GetConfigEnvironmentViewModel {
+export default class UpdateConfigEnvironmentViewModel extends GetConfigEnvironmentViewModel {
 
 }

@@ -1,3 +1,3 @@
-export interface AddConfigEnvironmentViewModel {
-    Name: string;
+export default class AddConfigEnvironmentViewModel {
+    name: string = ''
 }

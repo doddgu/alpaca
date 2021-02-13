@@ -13,7 +13,7 @@ namespace Alpaca.Service.Open.Controllers
 {
     [EnableCors("AllowCors")]
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
         [HttpGet]

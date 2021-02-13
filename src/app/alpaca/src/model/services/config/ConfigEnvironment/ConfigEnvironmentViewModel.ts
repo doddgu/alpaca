@@ -1,11 +1,11 @@
-export interface ConfigEnvironmentViewModel {
-    ID: number;
+export default class ConfigEnvironmentViewModel {
+    id: number = 0
 
-    Name: string;
+    name: string = ''
 
-    UpdateUserID: number;
+    updateUserID: number = 0
 
-    UpdateUserName: string;
+    updateUserName: string = ''
 
-    UpdateTime: Date | string;
+    updateTime: Date | string = ''
 }
