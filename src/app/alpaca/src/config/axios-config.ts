@@ -24,14 +24,16 @@ class AxiosConfig {
         }, function (error) {
             return Promise.reject(error)
         })
-        const _this = this
+        
         axios.interceptors.response.use(function (response) {
             return response
         }, function (error) {
-            if (error.response !== undefined && error.response.status === 401) {
+            if (error.response === undefined){
+                Catcher.showErrorMessage(error.message)
+            } else if(error.response.status === 401) {
                 router.push({ name: 'Auth.Login' })
             } else {
-                Catcher.showMessageByResponse(error.response)
+                Catcher.showMessageByErrorCode(error.response)
             }
             return Promise.reject(error)
         })

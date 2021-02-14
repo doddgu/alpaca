@@ -9,6 +9,20 @@
 		"files.exclude": {
 			"**/.vscode": true,
 			"**/node_modules": true
-		}
-	}
+		},
+		"volar.tsPlugin": true,
+		"[typescript]": {
+			"editor.defaultFormatter": "esbenp.prettier-vscode"
+		},
+		"prettier.tabWidth": 4
+	},
+    "extensions": {
+        "recommendations": [
+            "aaron-bond.better-comments",
+			"rafaelsalguero.csharp2ts",
+			"dbaeumer.vscode-eslint",
+			"esbenp.prettier-vscode",
+			"johnsoncodehk.volar",
+        ]
+    }
 }

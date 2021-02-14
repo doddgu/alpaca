@@ -1,6 +1,6 @@
 module.exports = {
     printWidth: 100,
-    tabWidth: 2,
+    tabWidth: 4,
     useTabs: false,
     semi: false, // 未尾逗号
     vueIndentScriptAndStyle: true,

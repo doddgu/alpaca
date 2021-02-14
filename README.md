@@ -14,7 +14,7 @@ Configuration Management based on .net 5
 * 数据库：sql server
 
 ## 调试项目
-* 前端：VS Code打开Alpaca.code-workspace
+* 前端：VS Code打开Alpaca.code-workspace，首次打开右下角提示安装推荐插件，允许即可开启Alpaca已经配置好的 Code Formatter
 	* 第一次运行npm install
 	* 如果没有yarn，再运行一下 npm install -g yarn
 		* 修改国内源：yarn config set registry 'https://registry.npm.taobao.org'
