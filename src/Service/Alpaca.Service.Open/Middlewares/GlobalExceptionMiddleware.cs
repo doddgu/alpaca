@@ -1,6 +1,8 @@
-﻿using Alpaca.Infrastructure.Robust.Exceptions;
+﻿using Alpaca.Infrastructure.Logging;
+using Alpaca.Infrastructure.Robust.Exceptions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +31,8 @@ namespace Alpaca.Service.Open.Middlewares
                 httpContext.Response.StatusCode = 404;
                 httpContext.Response.ContentType = "text/plain;charset=utf-8";
                 await httpContext.Response.WriteAsync(knfEx.Message, Encoding.UTF8).ConfigureAwait(false);
+
+                Logger.Warning(knfEx.ToString(), httpContext.Request.GetDisplayUrl());
             }
             catch (AException aex)
             {
@@ -46,6 +50,8 @@ namespace Alpaca.Service.Open.Middlewares
                 httpContext.Response.StatusCode = 500;
                 httpContext.Response.ContentType = "text/plain;charset=utf-8";
                 await httpContext.Response.WriteAsync(ex.ToString(), Encoding.UTF8).ConfigureAwait(false);
+
+                Logger.Error(ex.ToString(), httpContext.Request.GetDisplayUrl());
             }
         }
     }

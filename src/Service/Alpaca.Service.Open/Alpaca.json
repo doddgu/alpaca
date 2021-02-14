@@ -8,7 +8,7 @@
   "ConfigDispatch": {
     "Type": "Redis",
     "Config": {
-      "ConnectionString": ""
+      "ConnectionString": "test"
     }
   }
 }
