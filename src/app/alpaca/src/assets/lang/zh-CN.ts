@@ -1,6 +1,6 @@
 export default {
     text: {
-        save: "保存",
+        save: '保存',
         currentLang: '中文',
         lang: '语言',
         logout: '退出',
@@ -16,9 +16,13 @@ export default {
         updateTime: '修改时间',
         edit: '修改',
         operation: '操作',
+        verifyMissingDays: '验证超过N天未使用',
+        app: '应用',
+        appSubTitle: '以应用隔离配置，不同应用内可拥有同名配置，例：app.config'
     },
     template: {
         required: '[${v.name}]必填',
-        range: '[${v.name}]长度限制为[${v.min}-${v.max}]'
+        range: '[${v.name}]长度限制为[${v.min}-${v.max}]',
+        numberRange: '[${v.name}]数字限制为[${v.min}-${v.max}]'
     }
 }
