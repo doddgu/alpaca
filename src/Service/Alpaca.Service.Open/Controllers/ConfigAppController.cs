@@ -1,5 +1,5 @@
 ﻿using Alpaca.Biz.Config;
-using Alpaca.Model.Config.ConfigEnvironmentModels;
+using Alpaca.Model.Config.ConfigAppModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -14,36 +14,36 @@ namespace Alpaca.Service.Open.Controllers
     [EnableCors("AllowCors")]
     [Route("api/[controller]")]
     [ApiController]
-    public class ConfigEnvironmentController : ControllerBase
+    public class ConfigAppController : ControllerBase
     {
-        ConfigEnvironmentBiz _biz = null;
+        ConfigAppBiz _biz = null;
 
-        public ConfigEnvironmentController(ConfigEnvironmentBiz biz)
+        public ConfigAppController(ConfigAppBiz biz)
         {
             _biz = biz;
         }
 
         [HttpGet]
         [Route("GetList")]
-        public List<ConfigEnvironmentViewModel> GetList()
+        public List<ConfigAppViewModel> GetList()
         {
             return _biz.GetList();
         }
 
         [HttpGet]
-        public GetConfigEnvironmentViewModel Get(int ID)
+        public GetConfigAppViewModel Get(int ID)
         {
             return _biz.Get(ID);
         }
 
         [HttpPost]
-        public GetConfigEnvironmentViewModel Post(AddConfigEnvironmentViewModel model)
+        public GetConfigAppViewModel Post(AddConfigAppViewModel model)
         {
             return _biz.Add(model, User.GetUserID());
         }
 
         [HttpPut]
-        public GetConfigEnvironmentViewModel Put(UpdateConfigEnvironmentViewModel model)
+        public GetConfigAppViewModel Put(UpdateConfigAppViewModel model)
         {
             return _biz.Update(model, User.GetUserID());
         }

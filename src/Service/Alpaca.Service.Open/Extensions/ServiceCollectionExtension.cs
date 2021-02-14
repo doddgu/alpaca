@@ -24,6 +24,7 @@ namespace Alpaca.Service.Open
             services.AddTransient<IUserService, UserService>();
 
             services.AddSingleton(typeof(ConfigEnvironmentBiz));
+            services.AddSingleton(typeof(ConfigAppBiz));
 
             return services;
         }
