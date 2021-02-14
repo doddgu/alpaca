@@ -8,29 +8,18 @@ using System.Threading.Tasks;
 
 namespace Alpaca.Infrastructure.Config
 {
-    public class AlpacaConfigWrapper
+    public class AppConfigWrapper
     {
         private static JsonConfigWrapper _wrapper = null;
 
-        static AlpacaConfigWrapper()
+        static AppConfigWrapper()
         {
-            _wrapper = new JsonConfigWrapper("Alpaca.json");
+            _wrapper = new JsonConfigWrapper("appsettings.json");
         }
 
         public static string GetConnectionString(string name = "Default")
         {
             return _wrapper.GetConnectionString(name);
-        }
-
-        public static string GetTokenSecretKey()
-        {
-            var secretKey = _wrapper.Configuration["Token:SecretKey"];
-            if (string.IsNullOrWhiteSpace(secretKey))
-            {
-                secretKey = "doddgu.alpaca@github";
-            }
-
-            return secretKey;
         }
 
         public static TConfig GetModel<TConfig>(string sectionKey)

@@ -4,5 +4,11 @@
   },
   "Token": {
     "SecretKey": ""
+  },
+  "ConfigDispatch": {
+    "Type": "Redis",
+    "Config": {
+      "ConnectionString": ""
+    }
   }
 }

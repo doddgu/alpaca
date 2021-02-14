@@ -13,5 +13,10 @@ namespace Alpaca.Infrastructure.Enums
             ZH = "Redis",
             EN = "Redis")]
         Redis = 1,
+
+        [EnumDescription(
+            ZH = "OwnIntegration",
+            EN = "自有集成")]
+        OwnIntegration = 2,
     }
 }
