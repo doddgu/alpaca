@@ -7,7 +7,7 @@ using Alpaca.Plugins.Account.OwnIntegration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace Alpaca.Test.Account
+namespace Alpaca.Test.Config
 {
     [TestClass]
     public class UTConfigApp
