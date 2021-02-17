@@ -19,7 +19,7 @@ namespace Alpaca.Infrastructure.Security
             _secretKey = AlpacaConfigWrapper.GetTokenSecretKey();
         }
 
-        public static string GetJWT(int userID, string userName)
+        public static string GetJWT(int userID, string userName, List<string> lstPermisionCode)
         {
             var claims = new List<Claim>
             {
@@ -29,8 +29,10 @@ namespace Alpaca.Infrastructure.Security
                 new Claim(JwtRegisteredClaimNames.Nbf, $"{new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds()}"),
                 new Claim(JwtRegisteredClaimNames.Exp, $"{new DateTimeOffset(DateTime.Now.AddMonths(1)).ToUnixTimeSeconds()}"),
                 new Claim(JwtRegisteredClaimNames.Iss, "API"),
-                new Claim(JwtRegisteredClaimNames.Aud, "User")
+                new Claim(JwtRegisteredClaimNames.Aud, "User"),
             };
+
+            lstPermisionCode.ForEach(pc => claims.Add(new Claim("AlpacaPermission", pc)));
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secretKey));
             var jwt = new JwtSecurityToken(new JwtHeader(new SigningCredentials(key, SecurityAlgorithms.HmacSha256)), new JwtPayload(claims));

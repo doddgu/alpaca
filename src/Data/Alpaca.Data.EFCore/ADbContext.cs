@@ -91,6 +91,10 @@ namespace Alpaca.Data.EFCore
 
         public DbSet<User> User { get; set; }
 
+        public DbSet<Permission> Permission { get; set; }
+
+        public DbSet<UserPermission> UserPermission { get; set; }
+
         #endregion
 
         #region Config

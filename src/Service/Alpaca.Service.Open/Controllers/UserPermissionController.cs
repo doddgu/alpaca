@@ -1,6 +1,6 @@
-﻿using Alpaca.Biz.Config;
+﻿using Alpaca.Biz.Account;
 using Alpaca.Infrastructure.Security.Attributes;
-using Alpaca.Model.Config.ConfigEnvironmentModels;
+using Alpaca.Model.Account.UserPermissionModels;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -14,36 +14,36 @@ namespace Alpaca.Service.Open.Controllers
     [EnableCors("AllowCors")]
     [Route("api/[controller]")]
     [ApiController]
-    public class ConfigEnvironmentController : ControllerBase
+    public class UserPermissionController : ControllerBase
     {
-        ConfigEnvironmentBiz _biz = null;
+        UserPermissionBiz _biz = null;
 
-        public ConfigEnvironmentController(ConfigEnvironmentBiz biz)
+        public UserPermissionController(UserPermissionBiz biz)
         {
             _biz = biz;
         }
 
         [HttpGet]
         [Route("GetList")]
-        public List<ConfigEnvironmentViewModel> GetList()
+        public List<UserPermissionViewModel> GetList(int userID)
         {
-            return _biz.GetList();
+            return _biz.GetList(userID);
         }
 
         [HttpGet]
-        public GetConfigEnvironmentViewModel Get(int ID)
+        public GetUserPermissionViewModel Get(int ID)
         {
             return _biz.Get(ID);
         }
 
         [HttpPost]
-        public GetConfigEnvironmentViewModel Post(AddConfigEnvironmentViewModel model)
+        public GetUserPermissionViewModel Post(AddUserPermissionViewModel model)
         {
             return _biz.Add(model, User.GetUserID());
         }
 
         [HttpPut]
-        public GetConfigEnvironmentViewModel Put(UpdateConfigEnvironmentViewModel model)
+        public GetUserPermissionViewModel Put(UpdateUserPermissionViewModel model)
         {
             return _biz.Update(model, User.GetUserID());
         }

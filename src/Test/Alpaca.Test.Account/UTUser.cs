@@ -1,6 +1,7 @@
 using Alpaca.Biz.Account;
 using Alpaca.Infrastructure.Enums;
 using Alpaca.Infrastructure.Robust.Exceptions;
+using Alpaca.Plugins.Account.OwnIntegration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
@@ -13,7 +14,7 @@ namespace Alpaca.Test.Account
         [DataRow("admin", "admin")]
         public void TestGet(string userName, string password)
         {
-            var user = new UserBiz().GetByPassword(userName, password);
+            var user = new UserBiz(new UserService()).GetByPassword(userName, password);
 
             Assert.IsTrue(user.ID > 0);
         }
@@ -27,16 +28,16 @@ namespace Alpaca.Test.Account
                 NickName = "Test",
                 Password = "Test",
             };
-            var user = new UserBiz().Add(newUser, 0);
+            var user = new UserBiz(new UserService()).Add(newUser, 0);
 
             Assert.IsTrue(user.ID > 0);
 
             try
             {
-                var temp = new UserBiz().Add(newUser, 0);
+                var temp = new UserBiz(new UserService()).Add(newUser, 0);
 
-                new UserBiz().Delete(user.ID);
-                new UserBiz().Delete(temp.ID);
+                new UserBiz(new UserService()).Delete(user.ID);
+                new UserBiz(new UserService()).Delete(temp.ID);
                 Assert.Fail("check user name failed.");
             }
             catch (AException aex)
@@ -44,13 +45,13 @@ namespace Alpaca.Test.Account
                 Assert.AreEqual((int)ErrorCode.UserNameExist, aex.ErrorCode);
             }
 
-            new UserBiz().Delete(user.ID);
+            new UserBiz(new UserService()).Delete(user.ID);
         }
         [TestMethod]
         [DataRow(1, "admin1", "123456")]
         public void TestUpdatePassword(int userID, string oldPassword, string newPassword)
         {
-            var user = new UserBiz().UpdatePassword(userID, oldPassword, newPassword);
+            var user = new UserBiz(new UserService()).UpdatePassword(userID, oldPassword, newPassword);
             Assert.IsTrue(user != null);
         }
 
@@ -58,7 +59,7 @@ namespace Alpaca.Test.Account
         [DataRow(1, "admin")]
         public void TestResetPassword(int userID, string password)
         {
-            var user = new UserBiz().ResetPassword(userID, password);
+            var user = new UserBiz(new UserService()).ResetPassword(userID, password);
             Assert.IsTrue(user != null);
         }
     }

@@ -1,9 +1,9 @@
 ﻿using Alpaca.Biz.Account;
+using Alpaca.Infrastructure.Enums;
+using Alpaca.Infrastructure.Security.Attributes;
 using Alpaca.Model.Account;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,24 +16,31 @@ namespace Alpaca.Service.Open.Controllers
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
+        UserBiz _biz = null;
+
+        public UserController(UserBiz biz)
+        {
+            _biz = biz;
+        }
+
         [HttpGet]
         public UserViewModel Get(string userName, string password)
         {
-            return new UserBiz().GetByPassword(userName, password);
+            return _biz.GetByPassword(userName, password);
         }
 
-        [Authorize]
+        [AAtuh(nameof(PermissionCode.UserManagemenet))]
         [HttpPost]
         public UserViewModel Post(AddUserViewModel model)
         {
-            return new UserBiz().Add(model, User.GetUserID());
+            return _biz.Add(model, User.GetUserID());
         }
 
-        [Authorize]
+        [AAtuh(nameof(PermissionCode.UserManagemenet))]
         [HttpDelete]
         public string Delete()
         {
-            new UserBiz().Delete(User.GetUserID());
+            _biz.Delete(User.GetUserID());
 
             return "success";
         }

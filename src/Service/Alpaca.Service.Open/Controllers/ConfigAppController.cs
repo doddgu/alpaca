@@ -1,6 +1,6 @@
 ﻿using Alpaca.Biz.Config;
+using Alpaca.Infrastructure.Security.Attributes;
 using Alpaca.Model.Config.ConfigAppModels;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Alpaca.Service.Open.Controllers
 {
-    [Authorize]
+    [AAtuh]
     [EnableCors("AllowCors")]
     [Route("api/[controller]")]
     [ApiController]

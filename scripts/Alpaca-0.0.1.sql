@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [Alpaca]    Script Date: 2021/2/17 16:19:44 ******/
+/****** Object:  Database [Alpaca]    Script Date: 2021/2/17 19:03:24 ******/
 CREATE DATABASE [Alpaca]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -80,7 +80,7 @@ ALTER DATABASE [Alpaca] SET QUERY_STORE = OFF
 GO
 USE [Alpaca]
 GO
-/****** Object:  Table [dbo].[ConfigApp]    Script Date: 2021/2/17 16:19:44 ******/
+/****** Object:  Table [dbo].[ConfigApp]    Script Date: 2021/2/17 19:03:24 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -100,7 +100,7 @@ CREATE TABLE [dbo].[ConfigApp](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ConfigAppEnvironment]    Script Date: 2021/2/17 16:19:44 ******/
+/****** Object:  Table [dbo].[ConfigAppEnvironment]    Script Date: 2021/2/17 19:03:24 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -120,7 +120,7 @@ CREATE TABLE [dbo].[ConfigAppEnvironment](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ConfigDispatch]    Script Date: 2021/2/17 16:19:44 ******/
+/****** Object:  Table [dbo].[ConfigDispatch]    Script Date: 2021/2/17 19:03:24 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -141,7 +141,7 @@ CREATE TABLE [dbo].[ConfigDispatch](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ConfigEnvironment]    Script Date: 2021/2/17 16:19:44 ******/
+/****** Object:  Table [dbo].[ConfigEnvironment]    Script Date: 2021/2/17 19:03:24 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -160,7 +160,7 @@ CREATE TABLE [dbo].[ConfigEnvironment](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ConfigItem]    Script Date: 2021/2/17 16:19:44 ******/
+/****** Object:  Table [dbo].[ConfigItem]    Script Date: 2021/2/17 19:03:24 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -183,7 +183,7 @@ CREATE TABLE [dbo].[ConfigItem](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ConfigItemSniffer]    Script Date: 2021/2/17 16:19:44 ******/
+/****** Object:  Table [dbo].[ConfigItemSniffer]    Script Date: 2021/2/17 19:03:24 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -205,7 +205,7 @@ CREATE TABLE [dbo].[ConfigItemSniffer](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Permission]    Script Date: 2021/2/17 16:19:44 ******/
+/****** Object:  Table [dbo].[Permission]    Script Date: 2021/2/17 19:03:24 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -213,6 +213,7 @@ GO
 CREATE TABLE [dbo].[Permission](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
 	[Name] [varchar](20) NOT NULL,
+	[Code] [varchar](24) NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateUserID] [int] NOT NULL,
 	[CreateTime] [datetime] NOT NULL,
@@ -224,7 +225,7 @@ CREATE TABLE [dbo].[Permission](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[User]    Script Date: 2021/2/17 16:19:44 ******/
+/****** Object:  Table [dbo].[User]    Script Date: 2021/2/17 19:03:24 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -245,7 +246,7 @@ CREATE TABLE [dbo].[User](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[UserPermission]    Script Date: 2021/2/17 16:19:44 ******/
+/****** Object:  Table [dbo].[UserPermission]    Script Date: 2021/2/17 19:03:24 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -253,7 +254,7 @@ GO
 CREATE TABLE [dbo].[UserPermission](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
 	[UserID] [int] NOT NULL,
-	[PermissionID] [int] NOT NULL,
+	[PermissionCode] [varchar](24) NOT NULL,
 	[AppID] [int] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateUserID] [int] NOT NULL,
@@ -268,7 +269,7 @@ CREATE TABLE [dbo].[UserPermission](
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [UX_Name]    Script Date: 2021/2/17 16:19:44 ******/
+/****** Object:  Index [UX_Name]    Script Date: 2021/2/17 19:03:24 ******/
 CREATE UNIQUE NONCLUSTERED INDEX [UX_Name] ON [dbo].[ConfigEnvironment]
 (
 	[Name] ASC
@@ -276,7 +277,7 @@ CREATE UNIQUE NONCLUSTERED INDEX [UX_Name] ON [dbo].[ConfigEnvironment]
 WHERE ([IsDeleted]=(0))
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_ConfigAppID_ConfigEnvironmentID]    Script Date: 2021/2/17 16:19:44 ******/
+/****** Object:  Index [IX_ConfigAppID_ConfigEnvironmentID]    Script Date: 2021/2/17 19:03:24 ******/
 CREATE NONCLUSTERED INDEX [IX_ConfigAppID_ConfigEnvironmentID] ON [dbo].[ConfigItem]
 (
 	[ConfigAppID] ASC,
@@ -286,7 +287,7 @@ CREATE NONCLUSTERED INDEX [IX_ConfigAppID_ConfigEnvironmentID] ON [dbo].[ConfigI
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [IX_ConfigAppID_Namespace]    Script Date: 2021/2/17 16:19:44 ******/
+/****** Object:  Index [IX_ConfigAppID_Namespace]    Script Date: 2021/2/17 19:03:24 ******/
 CREATE NONCLUSTERED INDEX [IX_ConfigAppID_Namespace] ON [dbo].[ConfigItemSniffer]
 (
 	[ConfigAppID] ASC,
@@ -294,7 +295,7 @@ CREATE NONCLUSTERED INDEX [IX_ConfigAppID_Namespace] ON [dbo].[ConfigItemSniffer
 	[IsDeleted] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_UserID]    Script Date: 2021/2/17 16:19:44 ******/
+/****** Object:  Index [IX_UserID]    Script Date: 2021/2/17 19:03:24 ******/
 CREATE NONCLUSTERED INDEX [IX_UserID] ON [dbo].[UserPermission]
 (
 	[UserID] ASC,
@@ -337,11 +338,11 @@ ALTER TABLE [dbo].[ConfigItemSniffer] ADD  DEFAULT (getdate()) FOR [CreateTime]
 GO
 ALTER TABLE [dbo].[ConfigItemSniffer] ADD  DEFAULT (getdate()) FOR [UpdateTime]
 GO
-ALTER TABLE [dbo].[Permission] ADD  DEFAULT ((0)) FOR [IsDeleted]
+ALTER TABLE [dbo].[Permission] ADD  CONSTRAINT [DF__Permissio__IsDel__5CD6CB2B]  DEFAULT ((0)) FOR [IsDeleted]
 GO
-ALTER TABLE [dbo].[Permission] ADD  DEFAULT (getdate()) FOR [CreateTime]
+ALTER TABLE [dbo].[Permission] ADD  CONSTRAINT [DF__Permissio__Creat__5DCAEF64]  DEFAULT (getdate()) FOR [CreateTime]
 GO
-ALTER TABLE [dbo].[Permission] ADD  DEFAULT (getdate()) FOR [UpdateTime]
+ALTER TABLE [dbo].[Permission] ADD  CONSTRAINT [DF__Permissio__Updat__5EBF139D]  DEFAULT (getdate()) FOR [UpdateTime]
 GO
 ALTER TABLE [dbo].[User] ADD  DEFAULT ((0)) FOR [IsDeleted]
 GO
@@ -349,11 +350,11 @@ ALTER TABLE [dbo].[User] ADD  DEFAULT (getdate()) FOR [CreateTime]
 GO
 ALTER TABLE [dbo].[User] ADD  DEFAULT (getdate()) FOR [UpdateTime]
 GO
-ALTER TABLE [dbo].[UserPermission] ADD  DEFAULT ((0)) FOR [IsDeleted]
+ALTER TABLE [dbo].[UserPermission] ADD  CONSTRAINT [DF__UserPermi__IsDel__619B8048]  DEFAULT ((0)) FOR [IsDeleted]
 GO
-ALTER TABLE [dbo].[UserPermission] ADD  DEFAULT (getdate()) FOR [CreateTime]
+ALTER TABLE [dbo].[UserPermission] ADD  CONSTRAINT [DF__UserPermi__Creat__628FA481]  DEFAULT (getdate()) FOR [CreateTime]
 GO
-ALTER TABLE [dbo].[UserPermission] ADD  DEFAULT (getdate()) FOR [UpdateTime]
+ALTER TABLE [dbo].[UserPermission] ADD  CONSTRAINT [DF__UserPermi__Updat__6383C8BA]  DEFAULT (getdate()) FOR [UpdateTime]
 GO
 USE [master]
 GO
