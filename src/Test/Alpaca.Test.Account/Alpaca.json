@@ -1,6 +1,6 @@
 {
   "ConnectionStrings": {
-    "Default": "Data Source = localhost,1433;Initial Catalog = Alpaca;User Id = sa;Password = 123456;"
+    "Default": "Data Source = localhost,1433;Initial Catalog = Alpaca;User Id = sa;Password = alpaca;"
   },
   "Token": {
     "SecretKey": ""
