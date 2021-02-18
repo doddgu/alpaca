@@ -2,6 +2,8 @@
 using Alpaca.Infrastructure.Enums;
 using Alpaca.Infrastructure.Security.Attributes;
 using Alpaca.Model.Account;
+using Alpaca.Plugins.Account.OwnIntegration;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -39,7 +41,7 @@ namespace Alpaca.Service.Open.Controllers
         [HttpPut]
         public UserViewModel UpadatePassword(EditUserPasswordViewModel model)
         {
-            return new UserBiz().UpdatePassword(model.ID, model.Password);
+            return new UserBiz(new UserService()).UpdatePassword(model.ID, model.Password);
         }
 
         [AAtuh(nameof(PermissionCode.UserManagemenet))]

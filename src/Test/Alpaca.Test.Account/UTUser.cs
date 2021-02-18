@@ -52,7 +52,7 @@ namespace Alpaca.Test.Account
         [DataRow(1, "admin")]
         public void TestResetPassword(int userID, string password)
         {
-            var user = new UserBiz().UpdatePassword(userID, password);
+            var user = new UserBiz(new UserService()).UpdatePassword(userID, password);
             Assert.IsTrue(user != null);
         }
     }
