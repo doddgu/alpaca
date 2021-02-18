@@ -65,7 +65,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alpaca.Interfaces.Dispatch"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alpaca.Infrastructure.Logging", "Infrastructure\Alpaca.Infrastructure.Logging\Alpaca.Infrastructure.Logging.csproj", "{EFB247A2-62F9-4083-98F7-829DD643DE11}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alpaca.Test.Config", "Test\Alpaca.Test.Config\Alpaca.Test.Config.csproj", "{8AF6F0D1-CA01-43FC-B8A4-01591648CCB3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alpaca.Test.Config", "Test\Alpaca.Test.Config\Alpaca.Test.Config.csproj", "{8AF6F0D1-CA01-43FC-B8A4-01591648CCB3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

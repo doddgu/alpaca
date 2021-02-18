@@ -12,16 +12,12 @@ const app = createApp(App)
 
 const ai: any = antIcons
 
-Object.keys(antIcons).forEach(key => {
+Object.keys(antIcons).forEach((key) => {
     app.component(key, ai[key])
 })
-  
+
 store.state.antIcons = antIcons
 
 AxiosConfig.init()
 
-app.use(Antd)
-    .use(i18n)
-    .use(router)
-    .use(store)
-    .mount('#app')
+app.use(Antd).use(i18n).use(router).use(store).mount('#app')

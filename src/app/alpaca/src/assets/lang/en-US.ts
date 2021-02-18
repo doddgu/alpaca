@@ -19,7 +19,8 @@ export default {
         verifyMissingDays: 'Verify not used for more than n days',
         app: 'App',
         appSubTitle:
-            'Use application isolation configuration, different applications can have the same name configuration, for example: app.config'
+            'Use application isolation configuration, different applications can have the same name configuration, for example: app.config',
+        forbidden: 'You do not have permission, access is denied'
     },
     template: {
         required: '[${v.name}] required',

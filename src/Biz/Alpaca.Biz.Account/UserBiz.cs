@@ -4,7 +4,9 @@ using Alpaca.Infrastructure.Enums;
 using Alpaca.Infrastructure.Mapping;
 using Alpaca.Infrastructure.Robust.Exceptions;
 using Alpaca.Infrastructure.Security;
+using Alpaca.Interfaces.Account;
 using Alpaca.Model.Account;
+using Alpaca.Model.Account.UserPermissionModels;
 using System;
 using System.Linq;
 
@@ -12,6 +14,13 @@ namespace Alpaca.Biz.Account
 {
     public class UserBiz
     {
+        IUserService _userService = null;
+
+        public UserBiz(IUserService userService)
+        {
+            _userService = userService;
+        }
+
         public UserViewModel GetByPassword(string userName, string password)
         {
             using (var dbContext = ADbContext.Create())
@@ -27,7 +36,13 @@ namespace Alpaca.Biz.Account
                         Password = "admin",
                     }, 0);
 
-                    admin.AccessToken = TokenMaker.GetJWT(entity.ID, entity.Name);
+                    var adminPermission = new UserPermissionBiz().Add(new AddUserPermissionViewModel()
+                    {
+                        UserID = admin.ID,
+                        PermissionCode = ((int)PermissionCode.Admin).ToString(),
+                    }, 0);
+
+                    admin.AccessToken = TokenMaker.GetJWT(entity.ID, entity.Name, _userService.GetUserPermissionList(entity.ID));
 
                     return admin;
                 }
@@ -39,7 +54,7 @@ namespace Alpaca.Biz.Account
                     throw new AException(ErrorCode.PasswordIncorrect);
 
                 var user = new MapperWrapper<UserViewModel, User>().GetModel(entity);
-                user.AccessToken = TokenMaker.GetJWT(entity.ID, entity.Name);
+                user.AccessToken = TokenMaker.GetJWT(entity.ID, entity.Name, _userService.GetUserPermissionList(entity.ID));
 
                 return user;
             }

@@ -1,4 +1,5 @@
-﻿using Alpaca.Biz.Config;
+﻿using Alpaca.Biz.Account;
+using Alpaca.Biz.Config;
 using Alpaca.Infrastructure.Config;
 using Alpaca.Infrastructure.Enums;
 using Alpaca.Interfaces.Account;
@@ -25,6 +26,8 @@ namespace Alpaca.Service.Open
 
             services.AddSingleton(typeof(ConfigEnvironmentBiz));
             services.AddSingleton(typeof(ConfigAppBiz));
+            services.AddSingleton(typeof(UserPermissionBiz));
+            services.AddSingleton(typeof(UserBiz));
 
             return services;
         }
