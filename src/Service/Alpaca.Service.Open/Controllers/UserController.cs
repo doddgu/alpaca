@@ -28,6 +28,12 @@ namespace Alpaca.Service.Open.Controllers
         {
             return new UserBiz().Add(model, User.GetUserID());
         }
+        [Authorize]
+        [HttpPut]
+        public UserViewModel UpadatePassword(EditUserPasswordViewModel model)
+        {
+            return new UserBiz().UpdatePassword(model.ID, model.Password);
+        }
 
         [Authorize]
         [HttpDelete]

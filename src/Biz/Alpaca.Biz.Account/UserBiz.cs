@@ -77,11 +77,11 @@ namespace Alpaca.Biz.Account
         }
 
         /// <summary>
-        /// 重置密码
+        /// 修改密码
         /// </summary>
         /// <param name="userID"></param>
         /// <param name="password"></param>
-        public UserViewModel ResetPassword(int userID, string password)
+        public UserViewModel UpdatePassword(int userID, string password)
         {
 
             password = PasswordWrapper.Encrypt(password);
@@ -93,29 +93,6 @@ namespace Alpaca.Biz.Account
                     return default(UserViewModel);
                 }
                 entity.Password = password;
-                dbContext.Update<User, int>(entity, userID);
-                dbContext.SaveChanges();
-                return new MapperWrapper<UserViewModel, User>().GetModel(entity);
-            }
-        }
-        /// <summary>
-        /// 修改密码
-        /// </summary>
-        /// <param name="userID"></param>
-        /// <param name="oldPassword"></param>
-        /// <param name="newPassword"></param>
-        public UserViewModel UpdatePassword(int userID, string oldPassword, string newPassword)
-        {
-            oldPassword = PasswordWrapper.Encrypt(oldPassword);
-            newPassword = PasswordWrapper.Encrypt(oldPassword);
-            using (var dbContext = ADbContext.Create())
-            {
-                var entity = dbContext.User.SingleOrDefault(u => u.ID == userID && !u.IsDeleted && u.Password == oldPassword);
-                if (entity == null)
-                {
-                    return default(UserViewModel);
-                }
-                entity.Password = newPassword;
                 dbContext.Update<User, int>(entity, userID);
                 dbContext.SaveChanges();
                 return new MapperWrapper<UserViewModel, User>().GetModel(entity);

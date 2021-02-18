@@ -46,19 +46,12 @@ namespace Alpaca.Test.Account
 
             new UserBiz().Delete(user.ID);
         }
-        [TestMethod]
-        [DataRow(1, "admin1", "123456")]
-        public void TestUpdatePassword(int userID, string oldPassword, string newPassword)
-        {
-            var user = new UserBiz().UpdatePassword(userID, oldPassword, newPassword);
-            Assert.IsTrue(user != null);
-        }
 
         [TestMethod]
         [DataRow(1, "admin")]
         public void TestResetPassword(int userID, string password)
         {
-            var user = new UserBiz().ResetPassword(userID, password);
+            var user = new UserBiz().UpdatePassword(userID, password);
             Assert.IsTrue(user != null);
         }
     }
