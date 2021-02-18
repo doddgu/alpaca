@@ -1,5 +1,4 @@
-﻿using Alpaca.Biz.Account;
-using Alpaca.Biz.Config;
+﻿using Alpaca.Data.EFCore;
 using Alpaca.Infrastructure.Config;
 using Alpaca.Infrastructure.Enums;
 using Alpaca.Interfaces.Account;
@@ -7,13 +6,14 @@ using Alpaca.Interfaces.Dispatch;
 using Alpaca.Plugins.Account.OwnIntegration;
 using Alpaca.Plugins.Dispatch.OwnIntegration;
 using Alpaca.Plugins.Dispatch.Redis;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Alpaca.Service.Open
@@ -22,12 +22,20 @@ namespace Alpaca.Service.Open
     {
         public static IServiceCollection AddIOC(this IServiceCollection services)
         {
-            services.AddTransient<IUserService, UserService>();
+            services.AddSingleton<IUserService, UserService>();
 
-            services.AddSingleton(typeof(ConfigEnvironmentBiz));
-            services.AddSingleton(typeof(ConfigAppBiz));
-            services.AddSingleton(typeof(UserPermissionBiz));
-            services.AddSingleton(typeof(UserBiz));
+            services.AddScoped(sp => ADbContext.Create());
+
+            var bizDlls = Directory.GetFiles(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Alpaca.Biz.*.dll");
+            bizDlls.ToList().ForEach(dll =>
+            {
+                Assembly
+                    .LoadFrom(dll)
+                    .GetTypes()
+                    .Where(t => t.Name.EndsWith("Biz"))
+                    .ToList()
+                    .ForEach(bizType => services.AddScoped(bizType));
+            });
 
             return services;
         }

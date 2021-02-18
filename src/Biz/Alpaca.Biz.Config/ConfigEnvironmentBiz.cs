@@ -14,86 +14,71 @@ namespace Alpaca.Biz.Config
 {
     public class ConfigEnvironmentBiz
     {
+        private ADbContext _dbContext = null;
         private IUserService _userService = null;
 
-        public ConfigEnvironmentBiz(IUserService userService)
+        public ConfigEnvironmentBiz(ADbContext dbContext, IUserService userService)
         {
+            _dbContext = dbContext;
             _userService = userService;
         }
 
         public List<ConfigEnvironmentViewModel> GetList()
         {
-            using (var dbContext = ADbContext.Create())
+            var lstEntity = _dbContext.ConfigEnvironment.Where(ce => !ce.IsDeleted).OrderByDescending(ce => ce.UpdateTime).ToList();
+
+            var lstModel = new MapperWrapper<ConfigEnvironmentViewModel, ConfigEnvironment>().GetModelList(lstEntity);
+
+            lstModel.ForEach(m =>
             {
-                var lstEntity = dbContext.ConfigEnvironment.Where(ce => !ce.IsDeleted).OrderByDescending(ce => ce.UpdateTime).ToList();
+                m.UpdateUserName = _userService.Get(m.UpdateUserID).NickName;
+            });
 
-                var lstModel = new MapperWrapper<ConfigEnvironmentViewModel, ConfigEnvironment>().GetModelList(lstEntity);
-
-                lstModel.ForEach(m =>
-                {
-                    m.UpdateUserName = _userService.Get(m.UpdateUserID).NickName;
-                });
-
-                return lstModel;
-            }
+            return lstModel;
         }
 
         public GetConfigEnvironmentViewModel Get(int ID)
         {
-            using (var dbContext = ADbContext.Create())
-            {
-                var entity = dbContext.ConfigEnvironment.Single(ce => ce.ID == ID);
+            var entity = _dbContext.ConfigEnvironment.Single(ce => ce.ID == ID);
 
-                var model = new MapperWrapper<GetConfigEnvironmentViewModel, ConfigEnvironment>().GetModel(entity);
+            var model = new MapperWrapper<GetConfigEnvironmentViewModel, ConfigEnvironment>().GetModel(entity);
 
-                return model;
-            }
+            return model;
         }
 
         public GetConfigEnvironmentViewModel Add(AddConfigEnvironmentViewModel model, int userID)
         {
-            using (var dbContext = ADbContext.Create())
+            if (_dbContext.ConfigEnvironment.Any(ce => ce.Name == model.Name && !ce.IsDeleted))
             {
-                if (dbContext.ConfigEnvironment.Any(ce => ce.Name == model.Name && !ce.IsDeleted))
-                {
-                    throw new AException(ErrorCode.NameExist);
-                }
-
-                var entity = new MapperWrapper<AddConfigEnvironmentViewModel, ConfigEnvironment>().GetEntity(model);
-
-                dbContext.Add<ConfigEnvironment, int>(entity, userID);
-
-                return new MapperWrapper<GetConfigEnvironmentViewModel, ConfigEnvironment>().GetModel(entity);
+                throw new AException(ErrorCode.NameExist);
             }
+
+            var entity = new MapperWrapper<AddConfigEnvironmentViewModel, ConfigEnvironment>().GetEntity(model);
+
+            _dbContext.Add<ConfigEnvironment, int>(entity, userID);
+
+            return new MapperWrapper<GetConfigEnvironmentViewModel, ConfigEnvironment>().GetModel(entity);
         }
 
         public GetConfigEnvironmentViewModel Update(UpdateConfigEnvironmentViewModel model, int userID)
         {
-            using (var dbContext = ADbContext.Create())
+            if (_dbContext.ConfigEnvironment.Any(ce => ce.Name == model.Name && ce.ID != model.ID && !ce.IsDeleted))
             {
-                if (dbContext.ConfigEnvironment.Any(ce => ce.Name == model.Name && ce.ID != model.ID && !ce.IsDeleted))
-                {
-                    throw new AException(ErrorCode.NameExist);
-                }
-
-                var entity = new MapperWrapper<UpdateConfigEnvironmentViewModel, ConfigEnvironment>().GetEntity(model);
-
-                dbContext.Update<ConfigEnvironment, int>(entity, userID);
-
-                return new MapperWrapper<GetConfigEnvironmentViewModel, ConfigEnvironment>().GetModel(entity);
+                throw new AException(ErrorCode.NameExist);
             }
+
+            var entity = new MapperWrapper<UpdateConfigEnvironmentViewModel, ConfigEnvironment>().GetEntity(model);
+
+            _dbContext.Update<ConfigEnvironment, int>(entity, userID);
+
+            return new MapperWrapper<GetConfigEnvironmentViewModel, ConfigEnvironment>().GetModel(entity);
         }
 
         public void Delete(int ID, int userID)
         {
-            using (var dbContext = ADbContext.Create())
-            {
-                var entity = dbContext.ConfigEnvironment.SingleOrDefault(u => u.ID == ID && !u.IsDeleted);
+            var entity = _dbContext.ConfigEnvironment.SingleOrDefault(u => u.ID == ID && !u.IsDeleted);
 
-                dbContext.Delete<ConfigEnvironment, int>(entity, userID);
-
-                dbContext.SaveChanges();
-            }
+            _dbContext.Delete<ConfigEnvironment, int>(entity, userID);
         }
     }
 }

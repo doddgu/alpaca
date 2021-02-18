@@ -1,4 +1,5 @@
 using Alpaca.Biz.Account;
+using Alpaca.Data.EFCore;
 using Alpaca.Infrastructure.Enums;
 using Alpaca.Infrastructure.Mapping;
 using Alpaca.Infrastructure.Robust.Exceptions;
@@ -11,6 +12,14 @@ namespace Alpaca.Test.Account
     [TestClass]
     public class UTUserPermission
     {
+        private ADbContext _dbContext;
+
+        [TestInitialize]
+        public void Initialize()
+        {
+            _dbContext = ADbContext.Create();
+        }
+
         [TestMethod]
         public void Test()
         {
@@ -20,7 +29,7 @@ namespace Alpaca.Test.Account
                 PermissionCode = $"{DateTime.Now.Ticks}"
             };
 
-            var biz = new UserPermissionBiz();
+            var biz = new UserPermissionBiz(_dbContext);
 
             var newUserPermission = biz.Add(addUserPermission, 0);
 

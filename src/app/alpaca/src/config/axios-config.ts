@@ -14,7 +14,7 @@ class AxiosConfig {
         }
 
         // init axios default config
-        axios.defaults.baseURL = 'https://' + window.location.hostname + ':10002'
+        axios.defaults.baseURL = 'http://' + window.location.hostname + ':10002'
         axios.defaults.timeout = 60000
 
         axios.interceptors.request.use(

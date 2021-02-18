@@ -1,4 +1,5 @@
 using Alpaca.Biz.Config;
+using Alpaca.Data.EFCore;
 using Alpaca.Infrastructure.Enums;
 using Alpaca.Infrastructure.Mapping;
 using Alpaca.Infrastructure.Robust.Exceptions;
@@ -12,6 +13,14 @@ namespace Alpaca.Test.Config
     [TestClass]
     public class UTConfigApp
     {
+        private ConfigAppBiz _biz;
+
+        [TestInitialize]
+        public void Initialize()
+        {
+            _biz = new ConfigAppBiz(ADbContext.Create(), new UserService());
+        }
+
         [TestMethod]
         public void Test()
         {
@@ -20,18 +29,16 @@ namespace Alpaca.Test.Config
                 Name = $"{DateTime.Now.Ticks}"
             };
 
-            var biz = new ConfigAppBiz(new UserService());
-
-            var newConfigApp = biz.Add(addConfigApp, 0);
+            var newConfigApp = _biz.Add(addConfigApp, 0);
 
             Assert.IsTrue(newConfigApp.ID > 0);
 
             try
             {
-                var temp = biz.Add(addConfigApp, 0);
+                var temp = _biz.Add(addConfigApp, 0);
 
-                biz.Delete(newConfigApp.ID, 0);
-                biz.Delete(temp.ID, 0);
+                _biz.Delete(newConfigApp.ID, 0);
+                _biz.Delete(temp.ID, 0);
                 Assert.Fail("check app name failed.");
             }
             catch (AException aex)
@@ -41,11 +48,11 @@ namespace Alpaca.Test.Config
 
             var updateConfigApp = new MapperWrapper<UpdateConfigAppViewModel, GetConfigAppViewModel>().GetModel(newConfigApp);
             updateConfigApp.Name += "_D";
-            biz.Update(updateConfigApp, 0);
+            _biz.Update(updateConfigApp, 0);
 
-            Assert.AreEqual(updateConfigApp.Name, biz.Get(newConfigApp.ID).Name);
+            Assert.AreEqual(updateConfigApp.Name, _biz.Get(newConfigApp.ID).Name);
 
-            biz.Delete(newConfigApp.ID, 0);
+            _biz.Delete(newConfigApp.ID, 0);
         }
     }
 }

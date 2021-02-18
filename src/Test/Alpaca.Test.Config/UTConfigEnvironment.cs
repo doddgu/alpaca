@@ -1,4 +1,5 @@
 using Alpaca.Biz.Config;
+using Alpaca.Data.EFCore;
 using Alpaca.Infrastructure.Enums;
 using Alpaca.Infrastructure.Mapping;
 using Alpaca.Infrastructure.Robust.Exceptions;
@@ -12,6 +13,14 @@ namespace Alpaca.Test.Config
     [TestClass]
     public class UTConfigEnvironment
     {
+        private ConfigEnvironmentBiz _biz;
+
+        [TestInitialize]
+        public void Initialize()
+        {
+            _biz = new ConfigEnvironmentBiz(ADbContext.Create(), new UserService());
+        }
+
         [TestMethod]
         public void Test()
         {
@@ -20,18 +29,16 @@ namespace Alpaca.Test.Config
                 Name = $"{DateTime.Now.Ticks}"
             };
 
-            var biz = new ConfigEnvironmentBiz(new UserService());
-
-            var newConfigEnvironment = biz.Add(addConfigEnvironment, 0);
+            var newConfigEnvironment = _biz.Add(addConfigEnvironment, 0);
 
             Assert.IsTrue(newConfigEnvironment.ID > 0);
 
             try
             {
-                var temp = biz.Add(addConfigEnvironment, 0);
+                var temp = _biz.Add(addConfigEnvironment, 0);
 
-                biz.Delete(newConfigEnvironment.ID, 0);
-                biz.Delete(temp.ID, 0);
+                _biz.Delete(newConfigEnvironment.ID, 0);
+                _biz.Delete(temp.ID, 0);
                 Assert.Fail("check environment name failed.");
             }
             catch (AException aex)
@@ -41,11 +48,11 @@ namespace Alpaca.Test.Config
 
             var updateConfigEnvironment = new MapperWrapper<UpdateConfigEnvironmentViewModel, GetConfigEnvironmentViewModel>().GetModel(newConfigEnvironment);
             updateConfigEnvironment.Name += "_D";
-            biz.Update(updateConfigEnvironment, 0);
+            _biz.Update(updateConfigEnvironment, 0);
 
-            Assert.AreEqual(updateConfigEnvironment.Name, biz.Get(newConfigEnvironment.ID).Name);
+            Assert.AreEqual(updateConfigEnvironment.Name, _biz.Get(newConfigEnvironment.ID).Name);
 
-            biz.Delete(newConfigEnvironment.ID, 0);
+            _biz.Delete(newConfigEnvironment.ID, 0);
         }
     }
 }

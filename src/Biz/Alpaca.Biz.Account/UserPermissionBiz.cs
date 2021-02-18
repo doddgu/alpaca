@@ -12,80 +12,70 @@ namespace Alpaca.Biz.Account
 {
     public class UserPermissionBiz
     {
+        private ADbContext _dbContext = null;
+
+        public UserPermissionBiz(ADbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
         public List<UserPermissionViewModel> GetList(int userID)
         {
-            using (var dbContext = ADbContext.Create())
-            {
-                var lstEntity = dbContext.UserPermission.Where(up => up.UserID == userID && !up.IsDeleted).OrderByDescending(up => up.UpdateTime).ToList();
+            var lstEntity = _dbContext.UserPermission.Where(up => up.UserID == userID && !up.IsDeleted).OrderByDescending(up => up.UpdateTime).ToList();
 
-                var lstModel = new MapperWrapper<UserPermissionViewModel, UserPermission>().GetModelList(lstEntity);
+            var lstModel = new MapperWrapper<UserPermissionViewModel, UserPermission>().GetModelList(lstEntity);
 
-                return lstModel;
-            }
+            return lstModel;
         }
 
         public GetUserPermissionViewModel Get(int ID)
         {
-            using (var dbContext = ADbContext.Create())
-            {
-                var entity = dbContext.UserPermission.Single(up => up.ID == ID);
+            var entity = _dbContext.UserPermission.Single(up => up.ID == ID);
 
-                var model = new MapperWrapper<GetUserPermissionViewModel, UserPermission>().GetModel(entity);
+            var model = new MapperWrapper<GetUserPermissionViewModel, UserPermission>().GetModel(entity);
 
-                return model;
-            }
+            return model;
         }
 
         public GetUserPermissionViewModel Add(AddUserPermissionViewModel model, int userID)
         {
-            using (var dbContext = ADbContext.Create())
+            var mapper = new MapperWrapper<GetUserPermissionViewModel, UserPermission>();
+
+            var existsUserPermission = _dbContext.UserPermission.FirstOrDefault(up => up.UserID == model.UserID && up.PermissionCode == model.PermissionCode && up.AppID == model.AppID && !up.IsDeleted);
+            if (existsUserPermission != null)
             {
-                var mapper = new MapperWrapper<GetUserPermissionViewModel, UserPermission>();
-
-                var existsUserPermission = dbContext.UserPermission.FirstOrDefault(up => up.UserID == model.UserID && up.PermissionCode == model.PermissionCode && up.AppID == model.AppID && !up.IsDeleted);
-                if (existsUserPermission != null)
-                {
-                    return mapper.GetModel(existsUserPermission);
-                }
-
-                var entity = new MapperWrapper<AddUserPermissionViewModel, UserPermission>().GetEntity(model);
-
-                dbContext.Add<UserPermission, int>(entity, userID);
-
-                return mapper.GetModel(entity);
+                return mapper.GetModel(existsUserPermission);
             }
+
+            var entity = new MapperWrapper<AddUserPermissionViewModel, UserPermission>().GetEntity(model);
+
+            _dbContext.Add<UserPermission, int>(entity, userID);
+
+            return mapper.GetModel(entity);
         }
 
         public GetUserPermissionViewModel Update(UpdateUserPermissionViewModel model, int userID)
         {
-            using (var dbContext = ADbContext.Create())
+            var mapper = new MapperWrapper<GetUserPermissionViewModel, UserPermission>();
+
+            var existsUserPermission = _dbContext.UserPermission.FirstOrDefault(up => up.UserID == model.UserID && up.PermissionCode == model.PermissionCode && up.AppID == model.AppID && up.ID != model.ID && !up.IsDeleted);
+            if (existsUserPermission != null)
             {
-                var mapper = new MapperWrapper<GetUserPermissionViewModel, UserPermission>();
-
-                var existsUserPermission = dbContext.UserPermission.FirstOrDefault(up => up.UserID == model.UserID && up.PermissionCode == model.PermissionCode && up.AppID == model.AppID && up.ID != model.ID && !up.IsDeleted);
-                if (existsUserPermission != null)
-                {
-                    return mapper.GetModel(existsUserPermission);
-                }
-
-                var entity = new MapperWrapper<UpdateUserPermissionViewModel, UserPermission>().GetEntity(model);
-
-                dbContext.Update<UserPermission, int>(entity, userID);
-
-                return new MapperWrapper<GetUserPermissionViewModel, UserPermission>().GetModel(entity);
+                return mapper.GetModel(existsUserPermission);
             }
+
+            var entity = new MapperWrapper<UpdateUserPermissionViewModel, UserPermission>().GetEntity(model);
+
+            _dbContext.Update<UserPermission, int>(entity, userID);
+
+            return new MapperWrapper<GetUserPermissionViewModel, UserPermission>().GetModel(entity);
         }
 
         public void Delete(int ID, int userID)
         {
-            using (var dbContext = ADbContext.Create())
-            {
-                var entity = dbContext.UserPermission.SingleOrDefault(u => u.ID == ID && !u.IsDeleted);
+            var entity = _dbContext.UserPermission.SingleOrDefault(u => u.ID == ID && !u.IsDeleted);
 
-                dbContext.Delete<UserPermission, int>(entity, userID);
-
-                dbContext.SaveChanges();
-            }
+            _dbContext.Delete<UserPermission, int>(entity, userID);
         }
     }
 }
