@@ -14,6 +14,7 @@ namespace Alpaca.Test.Account
         [DataRow("admin", "admin")]
         public void TestGet(string userName, string password)
         {
+            //我就悄悄试一下提交
             var user = new UserBiz(new UserService()).GetByPassword(userName, password);
 
             Assert.IsTrue(user.ID > 0);
