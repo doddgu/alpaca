@@ -9,5 +9,7 @@ namespace Alpaca.Interfaces.Account
         UserModel Get(int userID);
 
         List<string> GetUserPermissionList(int userID);
+
+        void Refresh();
     }
 }

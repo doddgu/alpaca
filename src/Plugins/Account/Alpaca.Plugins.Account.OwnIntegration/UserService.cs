@@ -19,6 +19,11 @@ namespace Alpaca.Plugins.Account.OwnIntegration
 
         static UserService()
         {
+            new UserService().Refresh();
+        }
+
+        public void Refresh()
+        {
             using (var dbContext = ADbContext.Create())
             {
                 var lstUser = dbContext.User.Where(u => !u.IsDeleted).ToList();

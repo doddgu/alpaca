@@ -1,4 +1,5 @@
 ﻿using Alpaca.Data.Entities;
+using Alpaca.Data.Entities.Configurations;
 using Alpaca.Infrastructure.Config;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -29,11 +30,21 @@ namespace Alpaca.Data.EFCore
             return new ADbContext(connectionString ?? AlpacaConfigWrapper.GetConnectionString());
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new PermissionConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new UserPermissionConfiguration());
+
+            base.OnModelCreating(modelBuilder);
+        }
+
         #region CRUD
 
         public TEntity Add<TEntity, TKey>(TEntity entity, int updateUserID)
             where TEntity : EntityBase<TKey>
         {
+            entity.CreateTime = DateTime.Now;
             entity.UpdateTime = DateTime.Now;
             entity.CreateUserID = entity.UpdateUserID = updateUserID;
 
@@ -49,6 +60,7 @@ namespace Alpaca.Data.EFCore
         {
             entities.ForEach(entity =>
             {
+                entity.CreateTime = DateTime.Now;
                 entity.UpdateTime = DateTime.Now;
                 entity.CreateUserID = entity.UpdateUserID = updateUserID;
 

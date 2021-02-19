@@ -112,6 +112,8 @@ namespace Alpaca.Service.Open
             {
                 endpoints.MapControllers();
             });
+
+            app.UseDatabase();
         }
     }
 }

@@ -3,7 +3,9 @@ using Alpaca.Data.EFCore;
 using Alpaca.Infrastructure.Enums;
 using Alpaca.Infrastructure.Mapping;
 using Alpaca.Infrastructure.Robust.Exceptions;
+using Alpaca.Interfaces.Account;
 using Alpaca.Model.Account.UserPermissionModels;
+using Alpaca.Plugins.Account.OwnIntegration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
@@ -13,11 +15,13 @@ namespace Alpaca.Test.Account
     public class UTUserPermission
     {
         private ADbContext _dbContext;
+        private IUserService _userService;
 
         [TestInitialize]
         public void Initialize()
         {
             _dbContext = ADbContext.Create();
+            _userService = new UserService();
         }
 
         [TestMethod]
@@ -29,7 +33,7 @@ namespace Alpaca.Test.Account
                 PermissionCode = $"{DateTime.Now.Ticks}"
             };
 
-            var biz = new UserPermissionBiz(_dbContext);
+            var biz = new UserPermissionBiz(_dbContext, _userService);
 
             var newUserPermission = biz.Add(addUserPermission, 0);
 

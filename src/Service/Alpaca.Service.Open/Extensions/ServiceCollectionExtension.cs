@@ -6,6 +6,7 @@ using Alpaca.Interfaces.Dispatch;
 using Alpaca.Plugins.Account.OwnIntegration;
 using Alpaca.Plugins.Dispatch.OwnIntegration;
 using Alpaca.Plugins.Dispatch.Redis;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;

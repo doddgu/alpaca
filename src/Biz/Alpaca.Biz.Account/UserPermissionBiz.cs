@@ -1,6 +1,7 @@
 ﻿using Alpaca.Data.EFCore;
 using Alpaca.Data.Entities;
 using Alpaca.Infrastructure.Mapping;
+using Alpaca.Interfaces.Account;
 using Alpaca.Model.Account.UserPermissionModels;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,12 @@ namespace Alpaca.Biz.Account
     public class UserPermissionBiz
     {
         private ADbContext _dbContext = null;
+        private IUserService _userService = null;
 
-        public UserPermissionBiz(ADbContext dbContext)
+        public UserPermissionBiz(ADbContext dbContext, IUserService userService)
         {
             _dbContext = dbContext;
+            _userService = userService;
         }
 
         public List<UserPermissionViewModel> GetList(int userID)
@@ -51,6 +54,8 @@ namespace Alpaca.Biz.Account
 
             _dbContext.Add<UserPermission, int>(entity, userID);
 
+            _userService.Refresh();
+
             return mapper.GetModel(entity);
         }
 
@@ -68,6 +73,8 @@ namespace Alpaca.Biz.Account
 
             _dbContext.Update<UserPermission, int>(entity, userID);
 
+            _userService.Refresh();
+
             return new MapperWrapper<GetUserPermissionViewModel, UserPermission>().GetModel(entity);
         }
 
@@ -76,6 +83,8 @@ namespace Alpaca.Biz.Account
             var entity = _dbContext.UserPermission.SingleOrDefault(u => u.ID == ID && !u.IsDeleted);
 
             _dbContext.Delete<UserPermission, int>(entity, userID);
+
+            _userService.Refresh();
         }
     }
 }

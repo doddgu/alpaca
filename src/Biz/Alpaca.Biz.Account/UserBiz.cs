@@ -36,13 +36,15 @@ namespace Alpaca.Biz.Account
                     Password = "admin",
                 }, 0);
 
-                var adminPermission = new UserPermissionBiz(_dbContext).Add(new AddUserPermissionViewModel()
+                var adminPermission = new UserPermissionBiz(_dbContext, _userService).Add(new AddUserPermissionViewModel()
                 {
                     UserID = admin.ID,
                     PermissionCode = ((int)PermissionCode.Admin).ToString(),
                 }, 0);
 
-                admin.AccessToken = TokenMaker.GetJWT(entity.ID, entity.Name, _userService.GetUserPermissionList(entity.ID));
+                _userService.Refresh();
+
+                admin.AccessToken = TokenMaker.GetJWT(admin.ID, admin.Name, _userService.GetUserPermissionList(admin.ID));
 
                 return admin;
             }
@@ -72,6 +74,8 @@ namespace Alpaca.Biz.Account
 
             _dbContext.Add<User, int>(entity, userID);
 
+            _userService.Refresh();
+
             return new MapperWrapper<UserViewModel, User>().GetModel(entity);
         }
 
@@ -80,6 +84,8 @@ namespace Alpaca.Biz.Account
             var entity = _dbContext.User.SingleOrDefault(u => u.ID == userID && !u.IsDeleted);
 
             _dbContext.Delete<User, int>(entity, userID);
+
+            _userService.Refresh();
         }
 
         /// <summary>
@@ -97,6 +103,8 @@ namespace Alpaca.Biz.Account
             }
             entity.Password = password;
             _dbContext.Update<User, int>(entity, userID);
+
+            _userService.Refresh();
 
             return new MapperWrapper<UserViewModel, User>().GetModel(entity);
         }
