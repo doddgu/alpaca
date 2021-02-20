@@ -45,8 +45,8 @@ namespace Alpaca.Test.Account
             {
                 var temp = _biz.Add(newUser, 0);
 
-                _biz.Delete(user.ID);
-                _biz.Delete(temp.ID);
+                _biz.Delete(user.ID, 0);
+                _biz.Delete(temp.ID, 0);
                 Assert.Fail("check user name failed.");
             }
             catch (AException aex)
@@ -54,7 +54,7 @@ namespace Alpaca.Test.Account
                 Assert.AreEqual((int)ErrorCode.UserNameExist, aex.ErrorCode);
             }
 
-            _biz.Delete(user.ID);
+            _biz.Delete(user.ID, 0);
         }
 
         [TestMethod]

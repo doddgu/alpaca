@@ -5,6 +5,7 @@ using Alpaca.Infrastructure.Mapping;
 using Alpaca.Infrastructure.Robust.Exceptions;
 using Alpaca.Infrastructure.Security;
 using Alpaca.Interfaces.Account;
+using Alpaca.Interfaces.Account.Models;
 using Alpaca.Model.Account;
 using Alpaca.Model.Account.UserPermissionModels;
 using System;
@@ -42,8 +43,6 @@ namespace Alpaca.Biz.Account
                     PermissionCode = ((int)PermissionCode.Admin).ToString(),
                 }, 0);
 
-                _userService.Refresh();
-
                 admin.AccessToken = TokenMaker.GetJWT(admin.ID, admin.Name, _userService.GetUserPermissionList(admin.ID));
 
                 return admin;
@@ -74,18 +73,19 @@ namespace Alpaca.Biz.Account
 
             _dbContext.Add<User, int>(entity, userID);
 
-            _userService.Refresh();
+            var userModel = new MapperWrapper<UserModel, User>().GetModel(entity);
+            _userService.UpsertUser(userModel);
 
             return new MapperWrapper<UserViewModel, User>().GetModel(entity);
         }
 
-        public void Delete(int userID)
+        public void Delete(int userID, int operateUserID)
         {
             var entity = _dbContext.User.SingleOrDefault(u => u.ID == userID && !u.IsDeleted);
 
-            _dbContext.Delete<User, int>(entity, userID);
+            _dbContext.Delete<User, int>(entity, operateUserID);
 
-            _userService.Refresh();
+            _userService.DeleteUser(userID);
         }
 
         /// <summary>
@@ -104,7 +104,8 @@ namespace Alpaca.Biz.Account
             entity.Password = password;
             _dbContext.Update<User, int>(entity, userID);
 
-            _userService.Refresh();
+            var userModel = new MapperWrapper<UserModel, User>().GetModel(entity);
+            _userService.UpsertUser(userModel);
 
             return new MapperWrapper<UserViewModel, User>().GetModel(entity);
         }

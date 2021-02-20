@@ -67,6 +67,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alpaca.Infrastructure.Loggi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alpaca.Test.Config", "Test\Alpaca.Test.Config\Alpaca.Test.Config.csproj", "{8AF6F0D1-CA01-43FC-B8A4-01591648CCB3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alpaca.Infrastructure.Diagnostics", "Infrastructure\Alpaca.Infrastructure.Diagnostics\Alpaca.Infrastructure.Diagnostics.csproj", "{672E4A9F-1E45-40CD-BE98-A069CB9EA27A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -161,6 +163,10 @@ Global
 		{8AF6F0D1-CA01-43FC-B8A4-01591648CCB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8AF6F0D1-CA01-43FC-B8A4-01591648CCB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8AF6F0D1-CA01-43FC-B8A4-01591648CCB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{672E4A9F-1E45-40CD-BE98-A069CB9EA27A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{672E4A9F-1E45-40CD-BE98-A069CB9EA27A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{672E4A9F-1E45-40CD-BE98-A069CB9EA27A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{672E4A9F-1E45-40CD-BE98-A069CB9EA27A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -189,6 +195,7 @@ Global
 		{4F16F799-97F6-4ED3-BE1A-69E1FF6EEE96} = {82754782-9DFD-4953-916E-D587D1635442}
 		{EFB247A2-62F9-4083-98F7-829DD643DE11} = {5DD2C8A9-9064-4ED3-BC48-088486F27B7C}
 		{8AF6F0D1-CA01-43FC-B8A4-01591648CCB3} = {441D396B-A851-41AE-A5DE-B96730A0E5C2}
+		{672E4A9F-1E45-40CD-BE98-A069CB9EA27A} = {5DD2C8A9-9064-4ED3-BC48-088486F27B7C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {97FFE945-A397-48E0-A25F-D0A77E8E55EF}

@@ -42,12 +42,6 @@ namespace Alpaca.Service.Open.Controllers
             return _biz.Add(model, User.GetUserID());
         }
 
-        [HttpPut]
-        public GetUserPermissionViewModel Put(UpdateUserPermissionViewModel model)
-        {
-            return _biz.Update(model, User.GetUserID());
-        }
-
         [HttpDelete]
         public string Delete(int ID)
         {

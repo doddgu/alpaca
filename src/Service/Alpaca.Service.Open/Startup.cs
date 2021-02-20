@@ -88,6 +88,8 @@ namespace Alpaca.Service.Open
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseAlpacaDiagnostic();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

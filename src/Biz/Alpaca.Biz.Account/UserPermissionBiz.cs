@@ -2,6 +2,7 @@
 using Alpaca.Data.Entities;
 using Alpaca.Infrastructure.Mapping;
 using Alpaca.Interfaces.Account;
+using Alpaca.Interfaces.Account.Models;
 using Alpaca.Model.Account.UserPermissionModels;
 using System;
 using System.Collections.Generic;
@@ -54,28 +55,11 @@ namespace Alpaca.Biz.Account
 
             _dbContext.Add<UserPermission, int>(entity, userID);
 
-            _userService.Refresh();
+            var userPermissionModel = new MapperWrapper<UserPermissionModel, UserPermission>().GetModel(entity);
+
+            _userService.AddUserPermission(userPermissionModel);
 
             return mapper.GetModel(entity);
-        }
-
-        public GetUserPermissionViewModel Update(UpdateUserPermissionViewModel model, int userID)
-        {
-            var mapper = new MapperWrapper<GetUserPermissionViewModel, UserPermission>();
-
-            var existsUserPermission = _dbContext.UserPermission.FirstOrDefault(up => up.UserID == model.UserID && up.PermissionCode == model.PermissionCode && up.AppID == model.AppID && up.ID != model.ID && !up.IsDeleted);
-            if (existsUserPermission != null)
-            {
-                return mapper.GetModel(existsUserPermission);
-            }
-
-            var entity = new MapperWrapper<UpdateUserPermissionViewModel, UserPermission>().GetEntity(model);
-
-            _dbContext.Update<UserPermission, int>(entity, userID);
-
-            _userService.Refresh();
-
-            return new MapperWrapper<GetUserPermissionViewModel, UserPermission>().GetModel(entity);
         }
 
         public void Delete(int ID, int userID)
@@ -84,7 +68,7 @@ namespace Alpaca.Biz.Account
 
             _dbContext.Delete<UserPermission, int>(entity, userID);
 
-            _userService.Refresh();
+            _userService.DeleteUserPermission(entity.UserID, ID);
         }
     }
 }

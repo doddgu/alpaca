@@ -25,6 +25,7 @@
     <ProjectReference Include="..\..\Biz\Alpaca.Biz.Account\Alpaca.Biz.Account.csproj" />
     <ProjectReference Include="..\..\Biz\Alpaca.Biz.Config\Alpaca.Biz.Config.csproj" />
     <ProjectReference Include="..\..\Data\Alpaca.Data.EFCore\Alpaca.Data.EFCore.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Alpaca.Infrastructure.Diagnostics\Alpaca.Infrastructure.Diagnostics.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Alpaca.Infrastructure.Security\Alpaca.Infrastructure.Security.csproj" />
     <ProjectReference Include="..\..\Interfaces\Alpaca.Interfaces.Dispatch\Alpaca.Interfaces.Dispatch.csproj" />
     <ProjectReference Include="..\..\Model\Alpaca.Model.Account\Alpaca.Model.Account.csproj" />

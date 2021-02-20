@@ -4,6 +4,7 @@ using Alpaca.Infrastructure.Config;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Alpaca.Data.EFCore
 {

@@ -5,7 +5,6 @@ using Alpaca.Infrastructure.Enums;
 using Alpaca.Infrastructure.Mapping;
 using Alpaca.Interfaces.Account;
 using Alpaca.Interfaces.Account.Models;
-using Alpaca.Model.Account.UserPermissionModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,14 +14,9 @@ namespace Alpaca.Plugins.Account.OwnIntegration
     public class UserService : IUserService
     {
         private static MemoryCache<int, UserModel> _mcUser = new MemoryCache<int, UserModel>();
-        private static MemoryCache<int, List<UserPermissionViewModel>> _mcUserPermission = new MemoryCache<int, List<UserPermissionViewModel>>();
+        private static MemoryCache<int, List<UserPermissionModel>> _mcUserPermission = new MemoryCache<int, List<UserPermissionModel>>();
 
         static UserService()
-        {
-            new UserService().Refresh();
-        }
-
-        public void Refresh()
         {
             using (var dbContext = ADbContext.Create())
             {
@@ -35,7 +29,7 @@ namespace Alpaca.Plugins.Account.OwnIntegration
                 });
 
                 var lstUserPermission = dbContext.UserPermission.Where(u => !u.IsDeleted).ToList();
-                var mapperUserPermission = new MapperWrapper<UserPermissionViewModel, UserPermission>();
+                var mapperUserPermission = new MapperWrapper<UserPermissionModel, UserPermission>();
 
                 lstUserPermission.GroupBy(up => up.UserID).ToList().ForEach(gup =>
                 {
@@ -68,6 +62,38 @@ namespace Alpaca.Plugins.Account.OwnIntegration
             {
                 return new List<string>();
             }
+        }
+
+        public void UpsertUser(UserModel user)
+        {
+            _mcUser.AddOrUpdate(user.ID, id => user);
+        }
+
+        public void DeleteUser(int userID)
+        {
+            _mcUser.Remove(userID);
+        }
+
+        public void AddUserPermission(UserPermissionModel userPermissionModel)
+        {
+            _mcUserPermission.Get(userPermissionModel.UserID, out var lstUserPermission);
+
+            lstUserPermission = lstUserPermission ?? new List<UserPermissionModel>();
+
+            lstUserPermission.Add(userPermissionModel);
+
+            _mcUserPermission.AddOrUpdate(userPermissionModel.ID, id => lstUserPermission);
+        }
+
+        public void DeleteUserPermission(int userID, int userPermissionID)
+        {
+            _mcUserPermission.Get(userID, out var lstUserPermission);
+
+            lstUserPermission = lstUserPermission ?? new List<UserPermissionModel>();
+
+            lstUserPermission.RemoveAll(up => up.ID == userPermissionID);
+
+            _mcUserPermission.AddOrUpdate(userID, id => lstUserPermission);
         }
     }
 }

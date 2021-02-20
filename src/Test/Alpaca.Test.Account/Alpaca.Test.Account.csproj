@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -28,6 +28,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Biz\Alpaca.Biz.Account\Alpaca.Biz.Account.csproj" />
     <ProjectReference Include="..\..\Biz\Alpaca.Biz.Config\Alpaca.Biz.Config.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Alpaca.Infrastructure.Diagnostics\Alpaca.Infrastructure.Diagnostics.csproj" />
     <ProjectReference Include="..\..\Plugins\Account\Alpaca.Plugins.Account.OwnIntegration\Alpaca.Plugins.Account.OwnIntegration.csproj" />
   </ItemGroup>
 

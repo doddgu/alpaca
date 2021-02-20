@@ -10,6 +10,12 @@ namespace Alpaca.Interfaces.Account
 
         List<string> GetUserPermissionList(int userID);
 
-        void Refresh();
+        void UpsertUser(UserModel user);
+
+        void DeleteUser(int userID);
+
+        void AddUserPermission(UserPermissionModel userPermission);
+
+        void DeleteUserPermission(int userID, int userPermissionID);
     }
 }

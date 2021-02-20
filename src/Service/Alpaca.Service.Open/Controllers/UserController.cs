@@ -44,9 +44,9 @@ namespace Alpaca.Service.Open.Controllers
 
         [AAtuh(nameof(PermissionCode.UserManagemenet))]
         [HttpDelete]
-        public string Delete()
+        public string Delete(int userID)
         {
-            _biz.Delete(User.GetUserID());
+            _biz.Delete(userID, User.GetUserID());
 
             return "success";
         }

@@ -9,7 +9,6 @@
     <ProjectReference Include="..\..\..\Infrastructure\Alpaca.Infrastructure.Caching\Alpaca.Infrastructure.Caching.csproj" />
     <ProjectReference Include="..\..\..\Infrastructure\Alpaca.Infrastructure.Mapping\Alpaca.Infrastructure.Mapping.csproj" />
     <ProjectReference Include="..\..\..\Interfaces\Alpaca.Interfaces.Account\Alpaca.Interfaces.Account.csproj" />
-    <ProjectReference Include="..\..\..\Model\Alpaca.Model.Account\Alpaca.Model.Account.csproj" />
   </ItemGroup>
 
 </Project>
