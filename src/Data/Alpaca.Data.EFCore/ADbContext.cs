@@ -117,8 +117,6 @@ namespace Alpaca.Data.EFCore
 
         public DbSet<ConfigAppEnvironment> ConfigAppEnvironment { get; set; }
 
-        public DbSet<ConfigDispatch> ConfigDispatch { get; set; }
-
         public DbSet<ConfigItem> ConfigItem { get; set; }
 
         public DbSet<ConfigItemSniffer> ConfigItemSniffer { get; set; }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Alpaca.Data.Entities
 {
-    [Index(nameof(Name))]
+    [Index(nameof(Name), nameof(IsDeleted))]
     public class User : EntityBase<int>
     {
         [Required]

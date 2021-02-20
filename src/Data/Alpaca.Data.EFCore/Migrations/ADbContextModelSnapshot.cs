@@ -37,7 +37,9 @@ namespace Alpaca.Data.EFCore.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<DateTime>("UpdateTime")
                         .HasColumnType("datetime2");
@@ -84,44 +86,9 @@ namespace Alpaca.Data.EFCore.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("ConfigAppID", "IsDeleted");
+
                     b.ToTable("ConfigAppEnvironment");
-                });
-
-            modelBuilder.Entity("Alpaca.Data.Entities.ConfigDispatch", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreateTime")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("CreateUserID")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Enabled")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("JsonConfig")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("UpdateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("UpdateUserID")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("ConfigDispatch");
                 });
 
             modelBuilder.Entity("Alpaca.Data.Entities.ConfigEnvironment", b =>
@@ -142,7 +109,9 @@ namespace Alpaca.Data.EFCore.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<DateTime>("UpdateTime")
                         .HasColumnType("datetime2");
@@ -176,13 +145,16 @@ namespace Alpaca.Data.EFCore.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("Namespace")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<DateTime>("UpdateTime")
                         .HasColumnType("datetime2");
@@ -191,9 +163,12 @@ namespace Alpaca.Data.EFCore.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Value")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("ConfigAppID", "ConfigEnvironmentID", "IsDeleted");
 
                     b.ToTable("ConfigItem");
                 });
@@ -219,7 +194,9 @@ namespace Alpaca.Data.EFCore.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Namespace")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -235,6 +212,8 @@ namespace Alpaca.Data.EFCore.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("ConfigAppID", "Namespace", "IsDeleted");
+
                     b.ToTable("ConfigItemSniffer");
                 });
 
@@ -246,7 +225,9 @@ namespace Alpaca.Data.EFCore.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(24)
+                        .HasColumnType("nvarchar(24)");
 
                     b.Property<DateTime>("CreateTime")
                         .ValueGeneratedOnAdd()
@@ -259,7 +240,9 @@ namespace Alpaca.Data.EFCore.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("UpdateTime")
                         .HasColumnType("datetime2");
@@ -276,33 +259,33 @@ namespace Alpaca.Data.EFCore.Migrations
                         {
                             ID = 1,
                             Code = "100",
-                            CreateTime = new DateTime(2021, 2, 20, 0, 16, 2, 814, DateTimeKind.Local).AddTicks(4703),
+                            CreateTime = new DateTime(2021, 2, 20, 11, 3, 22, 487, DateTimeKind.Local).AddTicks(9449),
                             CreateUserID = 0,
                             IsDeleted = false,
                             Name = "Admin",
-                            UpdateTime = new DateTime(2021, 2, 20, 0, 16, 2, 814, DateTimeKind.Local).AddTicks(5992),
+                            UpdateTime = new DateTime(2021, 2, 20, 11, 3, 22, 488, DateTimeKind.Local).AddTicks(636),
                             UpdateUserID = 0
                         },
                         new
                         {
                             ID = 2,
                             Code = "100101",
-                            CreateTime = new DateTime(2021, 2, 20, 0, 16, 2, 814, DateTimeKind.Local).AddTicks(7349),
+                            CreateTime = new DateTime(2021, 2, 20, 11, 3, 22, 488, DateTimeKind.Local).AddTicks(1627),
                             CreateUserID = 0,
                             IsDeleted = false,
                             Name = "UserPermissionManagement",
-                            UpdateTime = new DateTime(2021, 2, 20, 0, 16, 2, 814, DateTimeKind.Local).AddTicks(7357),
+                            UpdateTime = new DateTime(2021, 2, 20, 11, 3, 22, 488, DateTimeKind.Local).AddTicks(1633),
                             UpdateUserID = 0
                         },
                         new
                         {
                             ID = 3,
                             Code = "100102",
-                            CreateTime = new DateTime(2021, 2, 20, 0, 16, 2, 814, DateTimeKind.Local).AddTicks(7365),
+                            CreateTime = new DateTime(2021, 2, 20, 11, 3, 22, 488, DateTimeKind.Local).AddTicks(1639),
                             CreateUserID = 0,
                             IsDeleted = false,
                             Name = "UserManagemenet",
-                            UpdateTime = new DateTime(2021, 2, 20, 0, 16, 2, 814, DateTimeKind.Local).AddTicks(7366),
+                            UpdateTime = new DateTime(2021, 2, 20, 11, 3, 22, 488, DateTimeKind.Local).AddTicks(1641),
                             UpdateUserID = 0
                         });
                 });
@@ -347,7 +330,7 @@ namespace Alpaca.Data.EFCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("Name");
+                    b.HasIndex("Name", "IsDeleted");
 
                     b.ToTable("User");
 
@@ -355,13 +338,13 @@ namespace Alpaca.Data.EFCore.Migrations
                         new
                         {
                             ID = 1,
-                            CreateTime = new DateTime(2021, 2, 20, 0, 16, 2, 817, DateTimeKind.Local).AddTicks(9999),
+                            CreateTime = new DateTime(2021, 2, 20, 11, 3, 22, 490, DateTimeKind.Local).AddTicks(3720),
                             CreateUserID = 0,
                             IsDeleted = false,
                             Name = "admin",
                             NickName = "Admin",
                             Password = "DB69FC039DCBD2962CB4D28F5891AAE1",
-                            UpdateTime = new DateTime(2021, 2, 20, 0, 16, 2, 818, DateTimeKind.Local).AddTicks(21),
+                            UpdateTime = new DateTime(2021, 2, 20, 11, 3, 22, 490, DateTimeKind.Local).AddTicks(3736),
                             UpdateUserID = 0
                         });
                 });
@@ -387,7 +370,9 @@ namespace Alpaca.Data.EFCore.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("PermissionCode")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(24)
+                        .HasColumnType("nvarchar(24)");
 
                     b.Property<DateTime>("UpdateTime")
                         .HasColumnType("datetime2");
@@ -400,6 +385,8 @@ namespace Alpaca.Data.EFCore.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("UserID", "IsDeleted");
+
                     b.ToTable("UserPermission");
 
                     b.HasData(
@@ -407,11 +394,11 @@ namespace Alpaca.Data.EFCore.Migrations
                         {
                             ID = 1,
                             AppID = 0,
-                            CreateTime = new DateTime(2021, 2, 20, 0, 16, 2, 818, DateTimeKind.Local).AddTicks(7331),
+                            CreateTime = new DateTime(2021, 2, 20, 11, 3, 22, 490, DateTimeKind.Local).AddTicks(8956),
                             CreateUserID = 0,
                             IsDeleted = false,
                             PermissionCode = "100",
-                            UpdateTime = new DateTime(2021, 2, 20, 0, 16, 2, 818, DateTimeKind.Local).AddTicks(7341),
+                            UpdateTime = new DateTime(2021, 2, 20, 11, 3, 22, 490, DateTimeKind.Local).AddTicks(8969),
                             UpdateUserID = 0,
                             UserID = 1
                         });
