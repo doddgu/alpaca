@@ -1,6 +1,7 @@
 ﻿using Alpaca.Data.EFCore;
 using Alpaca.Infrastructure.Config;
 using Alpaca.Infrastructure.Enums;
+using Alpaca.Infrastructure.Logging;
 using Alpaca.Interfaces.Account;
 using Alpaca.Interfaces.Dispatch;
 using Alpaca.Plugins.Account.OwnIntegration;
@@ -57,22 +58,28 @@ namespace Alpaca.Service.Open
         {
             var configDispatchType = (ConfigDispatchType)Enum.Parse(typeof(ConfigDispatchType), ((IConfiguration)obj)["ConfigDispatch:Type"]);
 
-            services.RemoveAll(typeof(IDispatchService));
+            IDispatchService dispatchService = null;
 
             switch (configDispatchType)
             {
                 case ConfigDispatchType.Redis:
-                    services.AddSingleton<IDispatchService, RedisDispatchService>();
+                    dispatchService = new RedisDispatchService();
                     break;
                 case ConfigDispatchType.OwnIntegration:
-                    services.AddSingleton<IDispatchService, OwnIntegrationDispatchService>();
+                    dispatchService = new OwnIntegrationDispatchService();
                     break;
                 default:
-                    break;
+                    {
+                        Logger.Error($"Not implement config dispatch type {configDispatchType}");
+                        return;
+                    }
             }
 
-            var dispatchService = services.BuildServiceProvider().GetService<IDispatchService>();
             dispatchService.ReloadConfig();
+
+            var descriptor = new ServiceDescriptor(typeof(IDispatchService), sp => dispatchService, ServiceLifetime.Singleton);
+
+            services.Replace(descriptor);
         }
     }
 }
