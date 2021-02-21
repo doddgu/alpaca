@@ -19,7 +19,9 @@ export default {
         verifyMissingDays: '验证超过N天未使用',
         app: '应用',
         appSubTitle: '以应用隔离配置，不同应用内可拥有同名配置，例：app.config',
-        forbidden: '您没有权限，拒绝访问'
+        forbidden: '您没有权限，拒绝访问',
+        appEnvironment: '应用环境',
+        checkAll: '全选'
     },
     template: {
         required: '[${v.name}]必填',

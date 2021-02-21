@@ -20,16 +20,18 @@
         </template>
     </a-page-header>
     <a-layout-content class="layout-content">
-        <a-table :dataSource="data" :columns="columns" rowKey="id">
-            <template #operation="{ record }">
-                <a-button type="link" style="padding-left: 0px;" @click="edit(record)">
-                    <template #icon>
-                        <EditOutlined />
-                    </template>
-                    {{ $t('text.edit') }}
-                </a-button>
-            </template>
-        </a-table>
+        <a-spin :spinning="spinning">
+            <a-table :dataSource="data" :columns="columns" rowKey="id">
+                <template #operation="{ record }">
+                    <a-button type="link" style="padding-left: 0px;" @click="edit(record)">
+                        <template #icon>
+                            <EditOutlined />
+                        </template>
+                        {{ $t('text.edit') }}
+                    </a-button>
+                </template>
+            </a-table>
+        </a-spin>
     </a-layout-content>
     <a-drawer
         :title="$t(editorType == EditorType.Create ? 'text.create' : 'text.edit')"
@@ -59,6 +61,25 @@
                     </a-form-item>
                 </a-col>
             </a-row>
+            <a-row :gutters="16">
+                <a-col :span="24">
+                    <a-form-item :label="$t('text.appEnvironment')" name="appEnvironmentList">
+                        <div :style="{ borderBottom: '1px solid #E9E9E9' }">
+                            <a-checkbox
+                                v-model:checked="checkAllAppEnvironmentList"
+                                :indeterminate="indeterminateCheckAllAppEnvironmentList"
+                                @change="onCheckAllAppEnvironmentListChange"
+                            >{{ $t('text.checkAll') }}</a-checkbox>
+                        </div>
+                        <a-checkbox-group
+                            v-model:value="editorModel.appEnvironmentList"
+                            :options="environmentList"
+                        >
+                            <template #label="{ name }">{{ name }}</template>
+                        </a-checkbox-group>
+                    </a-form-item>
+                </a-col>
+            </a-row>
         </a-form>
         <div
             :style="{
@@ -83,7 +104,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, watch, ref } from 'vue'
 import { useStore } from 'vuex'
 import { message } from 'ant-design-vue'
 export default defineComponent({
@@ -96,9 +117,11 @@ import RootState from '../../store/RootState'
 import axios from 'axios'
 import ConfigAppViewModel from '../../model/services/config/ConfigApp/ConfigAppViewModel'
 import UpdateConfigAppViewModel from '../../model/services/config/ConfigApp/UpdateConfigAppViewModel'
+import ConfigEnvironmentViewModel from '../../model/services/config/ConfigEnvironment/ConfigEnvironmentViewModel'
 import I18nHelper from '../../infrastructure/robust/helpers/I18nHelper'
 import moment from 'moment'
 import { EditorType } from '../../model/enums/EditorType'
+import _ from 'lodash'
 
 const store = useStore<RootState>()
 ref: loadingData = false
@@ -107,6 +130,10 @@ ref: data = [] as ConfigAppViewModel[]
 ref: showEditorDrawer = false
 ref: editorModel = new UpdateConfigAppViewModel()
 ref: editorType = EditorType.Create
+ref: checkAllAppEnvironmentList = false
+ref: indeterminateCheckAllAppEnvironmentList = true
+ref: environmentList = [] as ConfigEnvironmentViewModel[]
+ref: spinning = false
 
 const columns = [
     {
@@ -144,6 +171,12 @@ function loadData() {
     loadingData = true
 
     axios
+        .get('api/ConfigEnvironment/GetList')
+        .then((resp: any) => {
+            environmentList = _.map(resp.data, data => Object.assign(data, data, { value: data.id }))
+        })
+
+    axios
         .get('api/ConfigApp/GetList')
         .then((resp: any) => {
             data = resp.data
@@ -161,12 +194,15 @@ function create() {
 
 function edit(record: ConfigAppViewModel) {
     editorType = EditorType.Edit
-    editorModel = new UpdateConfigAppViewModel()
-    editorModel.name = record.name
-    editorModel.id = record.id
-    editorModel.verifyMissingDays = record.verifyMissingDays
+    spinning = true
 
-    showEditorDrawer = true
+    axios
+        .get('api/ConfigApp?ID=' + record.id)
+        .then((resp: any) => {
+            editorModel = resp.data
+            spinning = false
+            showEditorDrawer = true
+        })
 }
 
 function save() {
@@ -220,6 +256,18 @@ function save() {
             break;
     }
 }
+
+function onCheckAllAppEnvironmentListChange(e: any) {
+    editorModel.appEnvironmentList = e.target.checked ? _.map(environmentList, 'id') : []
+}
+
+watch(
+    () => editorModel.appEnvironmentList,
+    val => {
+        indeterminateCheckAllAppEnvironmentList = !!val.length && val.length < environmentList.length;
+        checkAllAppEnvironmentList = val.length === environmentList.length;
+    },
+)
 
 loadData()
 </script>

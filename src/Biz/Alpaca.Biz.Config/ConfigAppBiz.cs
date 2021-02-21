@@ -41,6 +41,7 @@ namespace Alpaca.Biz.Config
             var entity = _dbContext.ConfigApp.Single(ca => ca.ID == ID);
 
             var model = new MapperWrapper<GetConfigAppViewModel, ConfigApp>().GetModel(entity);
+            model.AppEnvironmentList = _dbContext.ConfigAppEnvironment.Where(cae => cae.ConfigAppID == ID && !cae.IsDeleted).Select(cae => cae.ConfigEnvironmentID).ToList();
 
             return model;
         }
@@ -54,7 +55,27 @@ namespace Alpaca.Biz.Config
 
             var entity = new MapperWrapper<AddConfigAppViewModel, ConfigApp>().GetEntity(model);
 
-            _dbContext.Add<ConfigApp, int>(entity, userID);
+            using (var transaction = _dbContext.Database.BeginTransaction())
+            {
+
+                try
+                {
+                    _dbContext.Add<ConfigApp, int>(entity, userID);
+
+                    _dbContext.AddRange<ConfigAppEnvironment, int>(model.AppEnvironmentList.Select(eid => new ConfigAppEnvironment()
+                    {
+                        ConfigAppID = entity.ID,
+                        ConfigEnvironmentID = eid
+                    }).ToList(), userID);
+
+                    transaction.Commit();
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    throw;
+                }
+            }
 
             return new MapperWrapper<GetConfigAppViewModel, ConfigApp>().GetModel(entity);
         }
@@ -67,8 +88,38 @@ namespace Alpaca.Biz.Config
             }
 
             var entity = new MapperWrapper<UpdateConfigAppViewModel, ConfigApp>().GetEntity(model);
+            var lstAppEnvironment = _dbContext.ConfigAppEnvironment.Where(cae => cae.ConfigAppID == model.ID && !cae.IsDeleted).ToList();
+            var lstEnvironmentID = lstAppEnvironment.Select(cae => cae.ConfigEnvironmentID).ToList();
 
+            var lstDeleteEnvironmentID = lstEnvironmentID.Except(model.AppEnvironmentList).ToList();
+            var lstDeleteAppEnvironments = lstAppEnvironment.Where(cae => lstDeleteEnvironmentID.Contains(cae.ConfigEnvironmentID)).ToList();
+            var lstAddEnvironmentID = model.AppEnvironmentList.Except(lstEnvironmentID).ToList();
+
+            //using (var transaction = _dbContext.Database.BeginTransaction())
+            //{
+
+            //    try
+            //    {
             _dbContext.Update<ConfigApp, int>(entity, userID);
+
+            if (lstDeleteAppEnvironments.Count > 0)
+                _dbContext.DeleteAll<ConfigAppEnvironment, int>(lstDeleteAppEnvironments, userID);
+
+            if (lstAddEnvironmentID.Count > 0)
+                _dbContext.AddRange<ConfigAppEnvironment, int>(lstAddEnvironmentID.Select(eid => new ConfigAppEnvironment()
+                {
+                    ConfigAppID = entity.ID,
+                    ConfigEnvironmentID = eid
+                }).ToList(), userID);
+
+            //    transaction.Commit();
+            //}
+            //catch (Exception)
+            //{
+            //    transaction.Rollback();
+            //    throw;
+            //}
+            //}
 
             return new MapperWrapper<GetConfigAppViewModel, ConfigApp>().GetModel(entity);
         }

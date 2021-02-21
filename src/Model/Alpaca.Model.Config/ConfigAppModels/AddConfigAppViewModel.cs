@@ -11,5 +11,7 @@ namespace Alpaca.Model.Config.ConfigAppModels
         public string Name { get; set; }
 
         public int VerifyMissingDays { get; set; }
+
+        public List<int> AppEnvironmentList { get; set; }
     }
 }

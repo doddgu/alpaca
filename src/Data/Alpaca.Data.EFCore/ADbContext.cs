@@ -15,6 +15,8 @@ namespace Alpaca.Data.EFCore
         protected ADbContext(string connectionString)
         {
             _connectionString = connectionString;
+            //ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            //ChangeTracker.AutoDetectChangesEnabled = false;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
@@ -94,6 +96,21 @@ namespace Alpaca.Data.EFCore
             entity.UpdateUserID = updateUserID;
 
             Set<TEntity>().Update(entity);
+
+            SaveChanges();
+        }
+
+        public void DeleteAll<TEntity, TKey>(List<TEntity> lstEntity, int updateUserID)
+            where TEntity : EntityBase<TKey>
+        {
+            lstEntity.ForEach(entity =>
+            {
+                entity.IsDeleted = true;
+                entity.UpdateTime = DateTime.Now;
+                entity.UpdateUserID = updateUserID;
+
+                Set<TEntity>().Update(entity);
+            });
 
             SaveChanges();
         }

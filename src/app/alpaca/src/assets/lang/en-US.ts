@@ -20,7 +20,9 @@ export default {
         app: 'App',
         appSubTitle:
             'Use application isolation configuration, different applications can have the same name configuration, for example: app.config',
-        forbidden: 'You do not have permission, access is denied'
+        forbidden: 'You do not have permission, access is denied',
+        appEnvironment: 'App environment',
+        checkAll: 'Check All'
     },
     template: {
         required: '[${v.name}] required',
