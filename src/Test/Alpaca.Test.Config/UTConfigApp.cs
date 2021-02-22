@@ -5,6 +5,8 @@ using Alpaca.Infrastructure.Mapping;
 using Alpaca.Infrastructure.Robust.Exceptions;
 using Alpaca.Model.Config.ConfigAppModels;
 using Alpaca.Plugins.Account.OwnIntegration;
+using Alpaca.Service.Open;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -20,7 +22,9 @@ namespace Alpaca.Test.Config
         [TestInitialize]
         public void Initialize()
         {
-            _biz = new ConfigAppBiz(ADbContext.Create(), new UserService());
+            var services = new ServiceCollection();
+            services.AddIOC();
+            _biz = services.BuildServiceProvider().GetService<ConfigAppBiz>();
         }
 
         [TestMethod]

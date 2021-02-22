@@ -1,7 +1,6 @@
 ﻿using Alpaca.Data.EFCore;
 using Alpaca.Data.Entities;
-using Alpaca.Infrastructure.Caching;
-using Alpaca.Infrastructure.Enums;
+using Microsoft.Extensions.DependencyInjection;
 using Alpaca.Infrastructure.Mapping;
 using Alpaca.Interfaces.Account;
 using Alpaca.Interfaces.Account.Models;
@@ -13,48 +12,35 @@ namespace Alpaca.Plugins.Account.OwnIntegration
 {
     public class UserService : IUserService
     {
-        private static MemoryCache<int, UserModel> _mcUser = new MemoryCache<int, UserModel>();
-        private static MemoryCache<int, List<UserPermissionModel>> _mcUserPermission = new MemoryCache<int, List<UserPermissionModel>>();
+        private static UserMemoryCache _userMemoryCache = null;
+        private static IServiceProvider _serviceProvider = null;
 
-        static UserService()
+        public UserService(IServiceProvider serviceProvider)
         {
-            using (var dbContext = ADbContext.Create())
-            {
-                var lstUser = dbContext.User.Where(u => !u.IsDeleted).ToList();
-                var mapperUser = new MapperWrapper<UserModel, User>();
+            if (_serviceProvider != null) return;
 
-                lstUser.ForEach(u =>
-                {
-                    _mcUser.TryAdd(u.ID, id => mapperUser.GetModel(u));
-                });
+            _serviceProvider = serviceProvider;
 
-                var lstUserPermission = dbContext.UserPermission.Where(u => !u.IsDeleted).ToList();
-                var mapperUserPermission = new MapperWrapper<UserPermissionModel, UserPermission>();
-
-                lstUserPermission.GroupBy(up => up.UserID).ToList().ForEach(gup =>
-                {
-                    _mcUserPermission.TryAdd(gup.Key, k => mapperUserPermission.GetModelList(gup.ToList()));
-                });
-            }
+            using var dbContext = _serviceProvider.GetService<ADbContext>();
+            _userMemoryCache = new UserMemoryCache(dbContext);
         }
 
         public UserModel Get(int ID)
         {
-            return _mcUser.GetOrAdd(ID, id =>
+            return _userMemoryCache.User.GetOrAdd(ID, id =>
             {
-                using (var dbContext = ADbContext.Create())
-                {
-                    var user = dbContext.User.FirstOrDefault(u => u.ID == id);
-                    var mapper = new MapperWrapper<UserModel, User>();
+                using var dbContext = _serviceProvider.GetService<ADbContext>();
 
-                    return mapper.GetModel(user);
-                }
+                var user = dbContext.User.FirstOrDefault(u => u.ID == id);
+                var mapper = new MapperWrapper<UserModel, User>();
+
+                return mapper.GetModel(user);
             });
         }
 
         public List<string> GetUserPermissionList(int userID)
         {
-            if (_mcUserPermission.Get(userID, out var lstUserPermission))
+            if (_userMemoryCache.UserPermission.Get(userID, out var lstUserPermission))
             {
                 return lstUserPermission.Select(up => up.PermissionCode).ToList();
             }
@@ -66,34 +52,34 @@ namespace Alpaca.Plugins.Account.OwnIntegration
 
         public void UpsertUser(UserModel user)
         {
-            _mcUser.AddOrUpdate(user.ID, id => user);
+            _userMemoryCache.User.AddOrUpdate(user.ID, id => user);
         }
 
         public void DeleteUser(int userID)
         {
-            _mcUser.Remove(userID);
+            _userMemoryCache.User.Remove(userID);
         }
 
         public void AddUserPermission(UserPermissionModel userPermissionModel)
         {
-            _mcUserPermission.Get(userPermissionModel.UserID, out var lstUserPermission);
+            _userMemoryCache.UserPermission.Get(userPermissionModel.UserID, out var lstUserPermission);
 
             lstUserPermission = lstUserPermission ?? new List<UserPermissionModel>();
 
             lstUserPermission.Add(userPermissionModel);
 
-            _mcUserPermission.AddOrUpdate(userPermissionModel.ID, id => lstUserPermission);
+            _userMemoryCache.UserPermission.AddOrUpdate(userPermissionModel.ID, id => lstUserPermission);
         }
 
         public void DeleteUserPermission(int userID, int userPermissionID)
         {
-            _mcUserPermission.Get(userID, out var lstUserPermission);
+            _userMemoryCache.UserPermission.Get(userID, out var lstUserPermission);
 
             lstUserPermission = lstUserPermission ?? new List<UserPermissionModel>();
 
             lstUserPermission.RemoveAll(up => up.ID == userPermissionID);
 
-            _mcUserPermission.AddOrUpdate(userID, id => lstUserPermission);
+            _userMemoryCache.UserPermission.AddOrUpdate(userID, id => lstUserPermission);
         }
     }
 }

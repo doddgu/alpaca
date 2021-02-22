@@ -26,8 +26,9 @@ namespace Alpaca.Service.Open
         {
             services.AddSingleton<IUserService, UserService>();
 
-            services.AddScoped(sp => ADbContext.Create());
+            services.AddDbContext<ADbContext>(options => options.UseSqlServer(AlpacaConfigWrapper.GetConnectionString()));
 
+            // Auto load all biz type
             var bizDlls = Directory.GetFiles(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Alpaca.Biz.*.dll");
             bizDlls.ToList().ForEach(dll =>
             {

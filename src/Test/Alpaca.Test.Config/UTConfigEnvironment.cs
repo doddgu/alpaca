@@ -1,10 +1,10 @@
 using Alpaca.Biz.Config;
-using Alpaca.Data.EFCore;
 using Alpaca.Infrastructure.Enums;
 using Alpaca.Infrastructure.Mapping;
 using Alpaca.Infrastructure.Robust.Exceptions;
 using Alpaca.Model.Config.ConfigEnvironmentModels;
-using Alpaca.Plugins.Account.OwnIntegration;
+using Alpaca.Service.Open;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
@@ -18,7 +18,9 @@ namespace Alpaca.Test.Config
         [TestInitialize]
         public void Initialize()
         {
-            _biz = new ConfigEnvironmentBiz(ADbContext.Create(), new UserService());
+            var services = new ServiceCollection();
+            services.AddIOC();
+            _biz = services.BuildServiceProvider().GetService<ConfigEnvironmentBiz>();
         }
 
         [TestMethod]

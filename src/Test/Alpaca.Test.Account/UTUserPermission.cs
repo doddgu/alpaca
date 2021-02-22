@@ -1,15 +1,11 @@
 using Alpaca.Biz.Account;
 using Alpaca.Data.EFCore;
-using Alpaca.Infrastructure.Diagnostics;
-using Alpaca.Infrastructure.Enums;
-using Alpaca.Infrastructure.Mapping;
-using Alpaca.Infrastructure.Robust.Exceptions;
 using Alpaca.Interfaces.Account;
 using Alpaca.Model.Account.UserPermissionModels;
-using Alpaca.Plugins.Account.OwnIntegration;
+using Alpaca.Service.Open;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Diagnostics;
 
 namespace Alpaca.Test.Account
 {
@@ -22,8 +18,10 @@ namespace Alpaca.Test.Account
         [TestInitialize]
         public void Initialize()
         {
-            _dbContext = ADbContext.Create();
-            _userService = new UserService();
+            var services = new ServiceCollection();
+            services.AddIOC();
+            _dbContext = services.BuildServiceProvider().GetService<ADbContext>();
+            _userService = services.BuildServiceProvider().GetService<IUserService>();
         }
 
         [TestMethod]

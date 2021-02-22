@@ -8,29 +8,12 @@ using System.Linq;
 
 namespace Alpaca.Data.EFCore
 {
-    public class ADbContext : DbContext
+    public class ADbContext : DbContext, IDisposable
     {
-        private string _connectionString = null;
-
-        protected ADbContext(string connectionString)
+        public ADbContext(DbContextOptions<ADbContext> options)
+            : base(options)
         {
-            _connectionString = connectionString;
-            //ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-            //ChangeTracker.AutoDetectChangesEnabled = false;
-        }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-            // https://docs.microsoft.com/zh-cn/ef/core/dbcontext-configuration/
-            => options.UseSqlServer(_connectionString);
-
-        public static ADbContext Create()
-        {
-            return Create(null);
-        }
-
-        public static ADbContext Create(string connectionString)
-        {
-            return new ADbContext(connectionString ?? AlpacaConfigWrapper.GetConnectionString());
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -140,5 +123,10 @@ namespace Alpaca.Data.EFCore
         public DbSet<ConfigItemSniffer> ConfigItemSniffer { get; set; }
 
         #endregion
+
+        public override void Dispose()
+        {
+            base.Dispose();
+        }
     }
 }

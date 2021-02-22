@@ -30,6 +30,7 @@
     <ProjectReference Include="..\..\Biz\Alpaca.Biz.Config\Alpaca.Biz.Config.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Alpaca.Infrastructure.Diagnostics\Alpaca.Infrastructure.Diagnostics.csproj" />
     <ProjectReference Include="..\..\Plugins\Account\Alpaca.Plugins.Account.OwnIntegration\Alpaca.Plugins.Account.OwnIntegration.csproj" />
+    <ProjectReference Include="..\..\Service\Alpaca.Service.Open\Alpaca.Service.Open.csproj" />
   </ItemGroup>
 
 </Project>
