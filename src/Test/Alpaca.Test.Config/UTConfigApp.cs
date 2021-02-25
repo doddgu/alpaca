@@ -18,13 +18,14 @@ namespace Alpaca.Test.Config
     public class UTConfigApp
     {
         private ConfigAppBiz _biz;
+        private ServiceCollection _services = new ServiceCollection();
 
         [TestInitialize]
         public void Initialize()
         {
-            var services = new ServiceCollection();
-            services.AddIOC();
-            _biz = services.BuildServiceProvider().GetService<ConfigAppBiz>();
+            _services = new ServiceCollection();
+            _services.AddIOC();
+            _biz = _services.BuildServiceProvider().GetService<ConfigAppBiz>();
         }
 
         [TestMethod]
@@ -58,7 +59,7 @@ namespace Alpaca.Test.Config
             updateConfigApp.AppEnvironmentList = new List<int>() { 2, 3 };
 
             // refresh dbcontext change tracker
-            _biz = new ConfigAppBiz(ADbContext.Create(), new UserService());
+            _biz = _services.BuildServiceProvider().GetService<ConfigAppBiz>();
             _biz.Update(updateConfigApp, 0);
 
             Assert.AreEqual(updateConfigApp.Name, _biz.Get(newConfigApp.ID).Name);
