@@ -26,7 +26,7 @@ Configuration Management based on .net 5
 	* 执行 Scripts/Alpaca*.sql
 
 ## 联系方式
-* QQ群: [@QQ群：995705420](https://qm.qq.com/cgi-bin/qm/qr?k=jfD8GETX5x6nS0YFYrbJLUDsEoflZwBD&jump_from=webapi)
+* [@QQ群：995705420](https://qm.qq.com/cgi-bin/qm/qr?k=jfD8GETX5x6nS0YFYrbJLUDsEoflZwBD&jump_from=webapi)
 
 ##关于作者
 
