@@ -15,11 +15,11 @@ namespace Alpaca.Plugins.Account.OwnIntegration
         private static UserMemoryCache _userMemoryCache = null;
         private static IServiceProvider _serviceProvider = null;
 
-        public UserService(IServiceProvider serviceProvider)
+        public UserService(IServiceCollection services)
         {
             if (_serviceProvider != null) return;
 
-            _serviceProvider = serviceProvider;
+            _serviceProvider = services.BuildServiceProvider();
 
             using var dbContext = _serviceProvider.GetService<ADbContext>();
             _userMemoryCache = new UserMemoryCache(dbContext);

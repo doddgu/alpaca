@@ -24,6 +24,7 @@ namespace Alpaca.Service.Open
     {
         public static IServiceCollection AddIOC(this IServiceCollection services)
         {
+            services.AddSingleton(services);
             services.AddSingleton<IUserService, UserService>();
 
             services.AddDbContext<ADbContext>(options => options.UseSqlServer(AlpacaConfigWrapper.GetConnectionString()));
