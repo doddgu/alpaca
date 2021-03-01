@@ -1,3 +1,6 @@
+## 因一些原因，本项目将由个人开源转为公司级底层基础设施开源。要合并且重新规划，暂停更新，后续会重定向到新项目中
+######
+
 ## Alpaca 是什么?
 Configuration Management based on .net 5
 
